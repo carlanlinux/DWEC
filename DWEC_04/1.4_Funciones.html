@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    //Si nuestra función va a devolver algún valor emplearemos la palabra reservada return
+    //Se puede usar una función en una asignación para asignar de golpe el valor a una variable. Variable = funcion();
+    //To String a una función deuvelve el código fuente de esta
+
+/*    funciones anidadas
+    buena opción para aplicar las funciones anidadas, es cuando tenemos una secuencia de instrucciones que necesitan ser
+    llamadas desde múltiples sitios dentro de una función, y esas instrucciones sólo tienen significado dentro del
+    contexto de esa función principal.*/
+
+    function hipotenusa(a,b) {
+        function cuadrado(c) {
+            return c * c;
+        }
+       return Math.sqrt(cuadrado(a) + cuadrado(b));
+    }
+
+    document.write("<br>La hipotenusa de un triángulo rectáculo es de 1 y 2 es "  + hipotenusa(1,2));
+
+</script>
+</body>
+</html>

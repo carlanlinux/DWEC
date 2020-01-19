@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+<script type="text/javascript">
+    var positivos = "Positivos: ";
+    var negativos = "Negativos: ";
+    do {
+      var entrada = parseInt(prompt("Introducir un número"));
+        if (entrada > 0) positivos += "*";
+        if (entrada < 0) negativos += "*";
+    } while (entrada != 0);
+
+    document.write(positivos + "<br>");
+    document.write(negativos + "<br>");
+
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+<script type="text/javascript">
+    var numeros = 0;
+    var contador = 0;
+    var arrayNumeros = [];
+    do {
+      var entrada = parseFloat(prompt("Introducir un número"));
+        if (entrada != -1) {
+            numeros += entrada;
+            arrayNumeros[contador] = entrada;
+            contador++ ;
+        }
+    } while (entrada != -1);
+
+
+    // Calculo de armónica
+    function armonica() {
+        var denominador = 0;
+        for (let i = 0; i < arrayNumeros.length; i++) {
+            denominador += (1 / arrayNumeros[i]);
+            return contador / denominador;
+        }
+    }
+
+    // Calculo de cuadrática
+    function cuadratica() {
+        var numerador = 0;
+        var prenumerador = 0;
+        for (let i = 0; i < arrayNumeros.length; i++) {
+            prenumerador += (Math.pow(arrayNumeros[i],2));
+            numerador = Math.sqrt(prenumerador);
+        }
+        return numerador / contador;
+    }
+
+    // Calculo de geométrica
+
+    function geometrica(){
+        var radicando = 1;
+        var resulraíz;
+        for (let i = 0; i < arrayNumeros.length; i++) {
+            radicando *= arrayNumeros[i];
+        }
+        resulraíz = Math.pow(radicando,1/contador);
+        return resulraíz;
+    }
+
+    document.write("La media aritmética es: " + numeros / contador + "<br>");
+    document.write("La media armónica es: " + armonica()+ "<br>");
+    document.write("La media cuadrática es: " + cuadratica() + "<br>");
+    document.write("La media geométrica es: " + geometrica() + "<br>");
+
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    var texto;
+    var nums;
+    var counter = 0;
+    do {
+        texto = prompt("Introducir número");
+        if (texto != "-1"&& isNaN(parseInt(texto))) {
+            counter++;
+            nums += parseInt(texto);
+        }
+    } while (texto == -1)
+    document.write(nums / counter);
+</script>
+</body>
+</html>

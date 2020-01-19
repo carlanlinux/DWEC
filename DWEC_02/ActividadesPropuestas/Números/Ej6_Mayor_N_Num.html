@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+<script type="text/javascript">
+    var array = [];
+    var fininalizar = 0;
+    var maximo = Number.MIN_VALUE;
+    do {
+        var intermedia = parseInt(prompt("Introduzca un número. Cuando quiera terminar introduzca \"999\":"))
+        if (intermedia == 999) {
+            fininalizar = 1;
+        } else {
+            array.push(intermedia);
+        }
+    } while (fininalizar != 1)
+    for ( let i = 0; i < array.length; i++) {
+        if (array[i] > maximo) maximo = array[i]
+    }
+    document.write("El valor máximo es " + maximo);
+
+</script>
+</body>
+</html>

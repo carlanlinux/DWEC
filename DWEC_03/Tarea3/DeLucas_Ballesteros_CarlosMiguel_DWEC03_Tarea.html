@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tarea 03</title>
+    <script type="text/javascript">
+        //Creo la variable de mi ventana
+        var nuevaVentana;
+
+        //Función par
+        function abrirVentana() {
+            nuevaVentana = window.open("", "ventana2", "height=400, width=600, resizable=no, status=yes" );
+            nuevaVentana.document.write("<p><h3>Ejemplo de ventana nueva</h3></p>");
+            nuevaVentana.document.write("La URL completa de la ventana es: <b>" + nuevaVentana.location.toString() + "</b><br>");
+            nuevaVentana.document.write("El protocolo utilizado es: <b>" + nuevaVentana.location.protocol + "</b><br>" );
+            nuevaVentana.document.write("El nombre en código del navegador es: <b>" + nuevaVentana.navigator.appCodeName + "</b><br>");
+            if(nuevaVentana.navigator.javaEnabled()) {
+                nuevaVentana.document.write("Java <b>SI</b> disponible en esta ventana<br>");
+            } else {
+                nuevaVentana.document.write("Java <b>NO</b> disponible en esta ventana<br>");
+            }
+            nuevaVentana.document.write("<iframe src='prueba.html'height='800' width='600'></iframe>")
+
+    }
+        function cerrarVentana() {
+            if (nuevaVentana) {
+                nuevaVentana.close()
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <script type="text/javascript">
+        document.write("<h1>TAREA DWEC 03</h1><hr>")
+        //Creo las varibales que voy a utlizar para recoger la información
+        var nombre = 0;
+        var dia = 0;
+        var mes = 0;
+        var ano = 0;
+
+        //Creo un objeto fecha actual
+        var fechaActual = new Date();
+
+        //Creo un array con los meses
+        var meses = Array(12);
+        meses[0] = "enero";
+        meses[1] = "febrero;";
+        meses[2] = "marzo";
+        meses[3] = "abril";
+        meses[4] = "mayo";
+        meses[5] = "junio";
+        meses[6] = "julio";
+        meses[7] = "agosto";
+        meses[8] = "septiembre";
+        meses[9] = "octubre";
+        meses[10] = "noviembre";
+        meses[11] = "diciembre";
+
+        //Verifico que se cumplen las condiciones de entrada
+        //Que se haya dado un nombre
+        //Días del 1 al 31
+        //Meses entre 1 y 12
+        //Años entre 1 y año actual
+        while (nombre == 0){
+            nombre = prompt("Introduzca su nombre y apellidos");
+        }
+        while (dia <= 0 || dia >31) {
+            dia = parseInt(prompt("Introduzca DIA de de nacimiento"));
+        }
+        while (mes <= 0 || mes >12) {
+            mes = parseInt(prompt("Introduzca MES de de nacimiento"));
+        }
+        while (ano <= 0 || ano > fechaActual.getFullYear() ) {
+            ano = parseInt(prompt("Introduzca AÑO de de nacimiento"));
+        }
+
+
+        //Realizo los diferentes ejercicios que se piden;
+        document.write("Buenos días, <b>" + nombre + "</b>.<br>");
+        document.write("Tu nombre tiene <b>" + nombre.length + "</b> caracteres, incluidos espacios.<br>");
+        document.write("La letra A de tu nombre está en la posición: <b>" + nombre.indexOf("a") + "</b>.<br>");
+        document.write("La última letra A de tu nombre está en la posición: <b>" + nombre.lastIndexOf("a")+ "</b>.<br>");
+        document.write("Tu nombre menos las últimas tres primeras letras es: <b>" + nombre.substr(3) + "</b>.<br>");
+        document.write("Tu nombre todo en mayúsculas es: <b>" + nombre.toUpperCase() + "</b>.<br>");
+        document.write("Tu edad es: <b>" + (fechaActual.getFullYear()-ano) + " años</b>.<br>");
+        document.write("Naiceste un feliz <b> " + meses[mes-1] + " del " + ano + "</b>.<br>");
+        document.write("El coseno de 180 es: <b>" + Math.cos(180) + "</b>.<br>");
+        document.write("El número mayor de (34,67,23,75,35,19) es: <b>" + Math.max(34,67,23,75,35,19) + "</b>.<br>");
+        document.write("Ejemplo de número al azar: <b>" + Math.random() + "</b>.<br>");
+    </script>
+        <!-- Botones para abrir y cerrar ventana -->
+        <input type="button" name="Abrir ventana" value="Nueva Ventana" onclick="abrirVentana()">
+        <input type="button" name="Cerrar ventana" value="Cerrar Ventana" onclick="cerrarVentana()">
+</body>
+</html>

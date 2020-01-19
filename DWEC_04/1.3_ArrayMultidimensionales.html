@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    //Array multidimensional con constructor
+    var datos = new Array();
+    datos[0] = new Array("Cristina", "Seguridad",24);
+    datos[1] = new Array("Catalina","Bases de datos", 17);
+    datos[2] = new Array("Vieites", "Sistemas", 28);
+    datos[3] = new Array("Benjamin", "Redes", 26);
+
+    //Array Multidimensional literal
+    /* Primera referencia, será a una posición del array principal, y la segunda referencia, a una posición del array
+    almacenado dentro de esa casilla del array principal. Ésto se hará escribiendo el nombre del array, y entre corchete
+    cada una de las referencias: nombrearray[indice1][indice2][indice3]*/
+
+    var datos2 = [
+        ["Cristina", "Seguridad",24],
+        ["Catalina","Bases de datos", 17],
+        ["Vieites", "Sistemas", 28],
+        ["Benjamin", "Redes", 26]
+    ];
+
+    document.write("<br>Quien importe Bases de datos? " + datos2[1][0]);
+    document.write("<br>Asignatura de Vietes: " + datos2[2][1]);
+    document.write("<br>Alumnos de benjamín: " + datos2[3][2]);
+    document.write("<hr>");
+/*
+    Recorer array multidimensional versión "cutre"
+*/
+
+    for (i=0; i<datos2.length; i++){
+        document.write("<br>" + datos2[i][0] + " da clases de " + datos2[i][1] + " a " + datos2[i][2] + " alumnos.")
+    }
+    document.write("<hr>");
+
+    //Recorrer array multidimpensional pintando tabla
+
+    document.write("<table>");
+    for (let i = 0; i<datos2.length;i++ ){
+        document.write("<tr>");
+        for (let j = 0; j<datos2[i].length; j++){
+            document.write("<td>" + datos2[i][j] + "</td>");
+
+        } document.write("</tr>");
+
+    }
+    document.write("</table>");
+
+</script>
+</body>
+</html>

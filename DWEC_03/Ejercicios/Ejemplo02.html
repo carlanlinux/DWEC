@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventana principal</title>
+    <script type="text/javascript">
+        function abrirVentana() {
+            nuevaVentana = window.open("ejemplo2_1.html", "sub", "height = 300, width = 400");
+        }
+        function cerrarVentana() {
+            if (nuevaVentana) {
+                nuevaVentana.close();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Ventaba principal</h1>
+    <p>
+    <form action="">
+        <input type="button" value="Abrir sub ventana" id="abrir" onclick="abrirVentana()">
+        <input type="button" value="Cerrar sub ventana" id="cerrar" onclick="cerrarVentana()">
+    </form>
+    </p>
+<p>
+    <label>Texto proveniente de la sub-ventana</label>
+    <input type="text" id="Original">
+</p>
+</body>
+</html>

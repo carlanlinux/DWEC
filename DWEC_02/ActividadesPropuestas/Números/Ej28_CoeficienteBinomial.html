@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+<script type="text/javascript">
+      var num1 = parseInt(prompt("Introducir primer número"));
+      var num2 = parseInt(prompt("Introducir segundo número (menor que el anterior"));
+
+      function factorial(num) {
+      var salida = 1;
+        for (let i = 1; i <= num; i++) {
+
+            salida = salida * i;
+        }
+        return salida;
+      }
+
+      if (num1 >= num2) {
+          document.write("El Coeficente binomial es: " + (factorial(num1) / (factorial(num2) * factorial(num1 - num2) )))
+      } else {
+          document.write("No se puede calcular, el primer número debe de ser mayor o igual que el segundo")
+      }
+
+</script>
+</body>
+</html>

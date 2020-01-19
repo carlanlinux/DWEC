@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+<script type="text/javascript">
+    var sumTramos = 0;
+
+    do {
+      var entrada = parseInt(prompt("Introducir un número"));
+        sumTramos += entrada;
+    } while (entrada != 0)
+
+    horas = Math.trunc(sumTramos / 60);
+    if (sumTramos < 60) {
+        document.write("El viaje dura " + sumTramos + " minutos");
+    } else {
+        document.write("El viaje dura " + horas + " y " + (sumTramos - (horas * 60)) + " minutos.");
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora Constante de Kaprekar - DWEC Tarea 02</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    //Definimos la constante
+    const KAPERKAR  = 6174;
+
+    //Pedimos al usuario que meta un númeo de 4 cifras
+    do {
+       var num = prompt("Introducir un número de cuatro cifras");
+       if (num[0] == num[1] && num[1] == num[2] && num[2] == num[3]) {
+           alert("El número introducido tiene los cuatro números iguales");
+           num = "error";
+       }
+    } while (num.length !== 4 || isNaN(parseInt(num)));
+
+
+    //Contador para la ejecución princiapl del programa
+    var count = 0;
+
+    do {
+
+        var minuendo = desrarrayzar(ordenarDescendente(num));
+        var sustraendo = desrarrayzar(ordenarAscendente(num));
+        num = minuendo - sustraendo;
+        var numCierre = num;
+        count ++;
+        document.write(" " + minuendo + " - " + sustraendo + " = " + num +  "<br>");
+        num = anadirCeros(num);
+
+    } while (numCierre != KAPERKAR & count <7 )
+
+    if (count >7 ) document.write("No hay solución para el número introducido. ");
+
+    //Funcion para ordenar descendentemente recibiendo un array y devuelve otro array.
+
+    function ordenarDescendente(numero) {
+
+        //Crear nuevo array vacío para meter los números ordenadoes
+        var arrnum = [];
+        //Llenar Array
+        for (let i = 0; i < numero.length ; i++) {
+                arrnum[i] = numero[i];
+            }
+        //Ordeno nuevo array
+        arrnum.sort();
+        arrnum.reverse();
+
+        return arrnum;
+
+    }
+
+    //Funcion para ordenar ascendentemente recibiendo un array y devuelve otro array.
+
+    function ordenarAscendente(numero) {
+       var arrnum = [];
+        //Llenar Array
+        for (let i = 0; i < numero.length ; i++) {
+            arrnum[i] = numero[i];
+        }
+        //Ordeno
+        arrnum.sort();
+
+    return arrnum;
+}
+
+    //Convierte un array de longitud 4 en un número
+function desrarrayzar(array) {
+        var multiplicador = [1000,100,10,1];
+        var numero = 0;
+
+     for (let i = 0; i < array.length ; i++) {
+         numero +=  array[i] * multiplicador[i];
+     }
+     return(numero);
+
+}
+    //Añadimos los ceros que sean necesarios para que
+    function anadirCeros(numero) {
+        //Pasamos a string el número
+        var arrayIntermedio = numero.toString();
+
+
+        //Creamos un array vacío, lo rellenamos con el que hemos creado antes y le metemos 0s si es necesario y devolvemos el array.
+        var nuevoArray = [];
+        for (let i = 0; i < arrayIntermedio.length ; i++) {
+            nuevoArray[i] = arrayIntermedio[i];
+        }
+
+        if (numero < 1000 && numero >= 100) nuevoArray.unshift(0);
+        if (numero < 100 && numero >= 10) nuevoArray.unshift(0,0);
+        if (numero < 10 && numero >= 1) nuevoArray.unshift(0,0,0);
+        return nuevoArray;
+    }
+
+
+
+
+</script>
+
+</body>
+</html>

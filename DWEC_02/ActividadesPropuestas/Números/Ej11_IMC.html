@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+<script type="text/javascript">
+    var altura = parseFloat(prompt("Introduzca la altura"));
+    var peso = parseFloat(prompt("Introduzca el peso"));
+
+    function imc(altura,peso) {
+        return peso / (Math.pow(altura,2));
+    }
+
+    document.write("El IMC con una altura de " + altura + " y un peso de " + peso + " es: " + imc(altura,peso));
+</script>
+</body>
+</html>

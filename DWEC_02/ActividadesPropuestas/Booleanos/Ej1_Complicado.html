@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1</title>
+    <script type="text/javascript">
+        function checkDato() {
+            var valor = document.getElementById("dato").value;
+            var pepa = prompt("Meta algo");
+            document.getElementById("resultado").value = typeof valor;
+            document.getElementById("valorfinal").value = valor.valueOf();
+            document.write("valorfinal" + valor.valueOf() + pepa);
+
+        }
+    </script>
+</head>
+<body>
+<h1>Ventana principal</h1>
+<form id="formulario">
+    <p>
+        <label for="dato">Introducir dato: </label>
+        <input type="text" id="dato">
+    </p>
+    <p>
+        <input type="button" value="Comprobar" id="enviar" onclick="checkDato()">
+    </p>
+    <p>
+        <label for="resultado">El resultado del chequeo es:</label>
+        <input type="text" id="resultado">
+        <input type="text" id="valorfinal">
+    </p>
+</form>
+</body>
+</html>

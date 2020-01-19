@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    //Creación del objeto (como crear la clase en Java
+    //Las propiedades para nuestro objeto se crearán dentro del constructor
+    // empleando para ello la palabra reservada this. se utiliza para hacer referencia al objeto actual, que en este
+    // caso será el objeto que está siendo creado por el constructor.
+    function Coche(marca, combustible) {
+
+        //Propiedades
+        this.marca = marca;
+        this.combustible = combustible;
+        this.cantidad = 0;
+
+        /* definir el contenido de la función rellenarDeposito dentro del constructor, ya que de esta forma los métodos al
+        estar programados a nivel local aportan mayor privacidad y seguridad al objeto en general*/
+        //Métodos
+        this.rellenarDposito = function (litros) {
+            this.cantidad = litros;
+
+        };
+
+    }
+
+    //Instanciación del objeto
+    var cocheDeMartin = new Coche("Ford", "diesel");
+    var cocheDeJuana = new Coche("Mercedes", "gasolina");
+
+    //Acceder a propiedades
+    document.write("<br> El coche de Martín es un " + cocheDeMartin.marca + " a " + cocheDeMartin.combustible);
+    document.write("<br> El coche de Juana es un " + cocheDeJuana.marca + " a " + cocheDeJuana.combustible);
+    cocheDeMartin.marca = "BMW";
+    document.write("<br> El coche de Martin es ahora un " + cocheDeMartin.marca + "");
+
+</script>
+</body>
+</html>

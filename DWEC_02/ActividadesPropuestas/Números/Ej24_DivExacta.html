@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+<script type="text/javascript">
+      var dividendo = parseInt(prompt("Introducir un dividendo"));
+      var divisor = parseInt(prompt("Introducir divisor"));
+      var cociente = dividendo / divisor;
+      if (dividendo % divisor == 0 && dividendo == divisor * (dividendo / divisor) + (dividendo % divisor)) {
+          document.write("La división es exacta. Resultado: " + cociente);
+      } else {
+          document.write("La división no es exacta. Resultado: " + cociente);
+      }
+
+</script>
+</body>
+</html>
