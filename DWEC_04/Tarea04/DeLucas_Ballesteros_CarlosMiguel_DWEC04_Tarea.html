@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    function Edificio(calle,numero,cp) {
+
+        //Propiedades
+        this.calle = calle;
+        this.numero = numero;
+        this.cp = cp;
+        this.planta = new Array();
+
+        document.write("Construido nuevo edificio en calle: " + this.calle + " no: " + this.numero, ", CP: " + this.cp + ".<br>")
+
+        //Métodos
+        //Cada vez que se introduzca un número de plantas a añadir y el número de puertas que tendrán
+        //esas plantas lo que hace es añadir uno por uno en el array las plantas con las puertas
+        //correspondientes dentro de un bucle for.
+
+
+        this.agregarPlantasYPuertas = function agregarPlantasYPuertas(numplantas, numPuertas) {
+            for (let i = 0; i < numplantas; i++) {
+                    this.planta.push([i]);
+                for (let j= 1; j < numPuertas; j++){
+
+                    this.planta[i].push([j]);
+                }
+
+            }
+        }
+
+        //Modificamos la propiedad número del objeto
+        this.modificarNumero = function modificarNumero(numero) {
+            this.numero = numero;
+
+        }
+
+        //Modificamos la propiedad calle del objeto
+        this.modificarCalle = function modificarCalle(calle) {
+            this.calle = calle;
+
+        }
+
+        //Modificamos la propiedad cp del objeto
+        this.modificarCodigoPostal = function modificarCodigoPostal(codigo) {
+            this.cp = codigo;
+
+        }
+
+        //Devolver el valor de la propiedad calle
+        this.imprimeCalle = function imprimeCalle() {
+            return this.calle;
+
+        }
+
+        //Devolver el valor de la propiedad número
+        this.imprimeNumero = function imprimeNumero() {
+            return this.numero;
+        }
+
+        ///Devolver el valor de la propiedad cp
+        this.imprimeCodigoPostal = function imprimeCodigoPostal() {
+            return this.cp;
+
+        }
+
+        //Añadir un propietario
+        this.agregarPropietario = function agregarPropietario(propietario, planta, puerta) {
+            if (planta <= this.planta.length && puerta <= this.planta[planta].length) {
+                for (plnta in this.planta) {
+                    if (plnta == planta) {
+                        for (puert in this.planta[planta]) {
+                            if (puert == puerta) {
+                                this.planta[planta][puerta]=propietario;
+                                document.write(propietario + " es ahora el propietario de la puerta " + puerta +
+                                    " de la planta " + planta + ".")
+                            }
+                        }
+
+                    }
+                }
+
+            } else {
+                document.write("El El edificio no tiene el número de plantas o puertas suficiente");
+            }
+
+
+        }
+
+        this.listar = function listar() {
+            document.write("Listado de propietarios del edificio calle" + this.calle + " número " + this.numero +
+            ".<br>");
+            for (let i = 0; i < this.planta.length; i++) {
+                for (var j = 0; j < this.planta[planta].length; j++)
+                {
+                    document.write("Propietario del piso con puerta" + this.planta[i][j] + "de la planta" + this.planta[i] +
+                    ": " + this.planta[i][j] + ".<br>");
+                }
+            }
+        }
+
+    }
+
+    var edificioA = new Edificio("real",43,28720);
+    document.write(edificioA.planta[1].length);
+    document.write("calle "+ edificioA.imprimeCalle()) + ".<br>";
+    document.write("cp "+ edificioA.imprimeCodigoPostal() + ".<br>");
+    document.write("numero "+ edificioA.imprimeNumero() + ".<br>");
+    edificioA.modificarCalle("Republicana");
+    edificioA.modificarCodigoPostal(29999);
+    edificioA.modificarNumero(52);
+    edificioA.agregarPlantasYPuertas(2,3);
+    document.write(edificioA.planta.length + "<br>");
+    document.write(edificioA.planta[0].length + "<br>");
+    edificioA.agregarPropietario("Felipe Juan",1,2);
+    edificioA.agregarPropietario("Juan",1,2);
+    edificioA.agregarPropietario("Peoa",1,3);
+    document.write("calle "+ edificioA.imprimeCalle() + ".<br>");
+    document.write("num "+ edificioA.imprimeNumero() + ".<br>");
+    document.write("cp "+ edificioA.imprimeCodigoPostal() + ".<br>");
+    document.write(edificioA.planta.toString());
+    edificioA.listar();
+
+</script>
+
+</body>
+</html>
