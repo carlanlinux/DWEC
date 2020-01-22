@@ -69,7 +69,7 @@
 
         }
 
-        //Añadir un propietario
+        //Añadir un propietario  //Revisar no funciona
         this.agregarPropietario = function agregarPropietario(propietario, planta, puerta) {
             if (planta <= this.planta.length && puerta <= this.planta[planta].length) {
                 for (plnta in this.planta) {
@@ -92,6 +92,7 @@
 
         }
 
+        //Revisar no funciona
         this.listar = function listar() {
             document.write("Listado de propietarios del edificio calle" + this.calle + " número " + this.numero +
             ".<br>");
