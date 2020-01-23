@@ -89,7 +89,7 @@
             document.write("Listado de propietarios del edificio calle" + this.calle + " número " + this.numero +
             ".<br>");
             for (let i = 0; i < this.planta.length; i++) {
-                for (var j = 0; j < this.planta[i].length; j++)
+                for (let j = 0; j < this.planta[i].length; j++)
                 {
                     let aux_planta = i+1;
                     let aux_puerta = j+1;
@@ -104,7 +104,7 @@
 
     }
 
-    var edificioA = new Edificio("real",43,28720);
+    const edificioA = new Edificio("real",43,28720);
     document.write("calle "+ edificioA.imprimeCalle() + ".<br>");
     document.write("cp "+ edificioA.imprimeCodigoPostal() + ".<br>");
     document.write("numero "+ edificioA.imprimeNumero() + ".<br>");
