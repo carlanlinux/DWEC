@@ -15,20 +15,24 @@
         this.cp = cp;
         this.plantas = [];
 
-        document.write("<ul><li>Construido nuevo edificio en calle: " + this.calle + " no: " + this.numero, ", CP: " + this.cp + ".</ul></li>");
-
-        //Métodos
-        //Cada vez que se introduzca un número de plantas a añadir y el número de puertas que tendrán
-        //esas plantas lo que hace es añadir uno por uno en el array las plantas con las puertas
-        //correspondientes dentro de un bucle for.
-
+        //Confirmamos la creación del objeto
+        document.write("<ul><li>Construido nuevo edificio en calle: " + this.calle + " no: " + this.numero, ", CP: "
+            + this.cp + ".</ul></li>");
 
         this.agregarPlantasYPuertas = function agregarPlantasYPuertas(numplantas, numPuertas) {
+            //Comprobamos que los datos que pasan son mayor que 0
             if (numplantas > 0 && numPuertas > 0) {
+                //Asignamos el número de plantas actual del array plantas a una variable
                 let numPlantasOriginal = this.plantas.length;
+                //Para añadir plantas, añadimos un array al array plantas. Lo hacemos mediante un bucle igualando la
+                //vaciable contador al número de plantas original, de tal forma que podamos tanto crear de 0 como
+                //Añadir más plantas si fuera preciso en un mismo método
                 for (let i = numPlantasOriginal; i < numPlantasOriginal + numplantas; i++) {
+                    //Hacemos un push para meter un array vacío dentro del array plantas
                     this.plantas.push([]);
+                    //Vamos añadiendo las puertas al array que contiene los datos de cada tabla.
                     for (let j = 0; j < numPuertas; j++) {
+                        // Las añadimos en forma decadena vacía.
                         this.plantas[i].push("");
                     }
                 }
@@ -72,12 +76,17 @@
 
         //Añadir un propietario  //Revisar no funciona
         this.agregarPropietario = function agregarPropietario(propietario, planta, puerta) {
+            //Comprobamos que estemos recibiendo todos los argumentos necesarios
             if (propietario == null || planta == null || puerta == null) {
                 document.write("Faltan datos para añadir un propietario.<br>");
                 return;
             }
             document.write("<ul>");
+            //Si los datos que pasan son mayor que cero y menores o iguales al número de plantas y puertas que tenemos
+            //por cada planta
             if (puerta > 0 && planta > 0 && planta <= this.plantas.length && puerta <= this.plantas[planta - 1].length) {
+                //Asignamos el propietario en el array de la planta con el valor de planta y puerta que recibimos como
+                //Argumento y se le resta uno ya que los array empiezan en posición 0 en vez de 1.
                 this.plantas[planta - 1][puerta - 1] = propietario;
                 document.write("<li>" + propietario + " es ahora el propietario de la puerta " + puerta +
                     " de la planta " + planta + ".</li>")
@@ -89,15 +98,19 @@
         };
 
 
-        //Revisar no funciona
+        //RListamos los datos mediante un doble buchle for para entrar en cada posición del array plantas y luego
+        // repetir operación en el array de cada planta donde se encuentran las puertas y pintarlo.
         this.listar = function listar() {
             document.write("<strong>Listado de propietarios del edificio calle" + this.calle + " número " + this.numero +
                 ".</strong></strong><br>");
             document.write("<ul>");
             for (let i = 0; i < this.plantas.length; i++) {
                 for (let j = 0; j < this.plantas[i].length; j++) {
+                    //Sacamos variables auxiliares ya que las posiciónes de las plantas y puertas en sus array comienzan
+                    //en cero y las que metemos comienzan a partir del 0.
                     let aux_planta = i + 1;
                     let aux_puerta = j + 1;
+                    //Sacamos el propietario porque en el caso que sea diferente a "" queremos ponerle un punto al final.
                     let aux_propietario = this.plantas[i][j];
                     if (aux_propietario !== "") aux_propietario += ".";
 
@@ -111,6 +124,11 @@
 
     }
 
+    /*
+    Comprobación del funcionamiento del ejercicio
+    */
+
+    //Instanciamos 3 objetos.
     const edificioA = new Edificio("Garcia Prieto", 58, 15706);
     const edificioB = new Edificio("Camino Caneiro", 29, 32004);
     const edificioC = new Edificio("San Clemente", "s/n", 15705);
