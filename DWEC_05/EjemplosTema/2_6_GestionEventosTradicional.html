@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión Eventos</title>
+</head>
+<body>
+<h1>Gestión tradicional de eventos</h1>
+<A ID="mienlace" href="pagina.html" onClick="alertar(this)">Pulsa aqui</a>
+<script type="text/javascript">
+    function alertar(objeto) {
+        alert("Te conectaremos con la página: " + objeto.href);
+    }
+</script>
+
+Su equivalente en el <strong>modelo tradicional</strong> sería:
+<A href="pagina.html" id="mienlace">Pulsa aqui</a>
+
+<script type="text/javascript">
+    document.getElementById("mienlace").onclick = alertar;
+
+    function alertar() {
+        alert("Te conectaremos con la página: " + this.href);
+    }
+</script>
+
+Se pueden hacer varias llamadas para un evento con: elemento.onclick = function ( ) { llamada1( ); llamada2( ) };
+
+
+</body>
+</html>

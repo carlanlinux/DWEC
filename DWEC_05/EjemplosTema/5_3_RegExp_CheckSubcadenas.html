@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    <
+    script;
+    type = "text/javascript" >;
+    var datos = [];
+    datos[0] = "El Blogger de Google";     // verdadero
+    datos[1] = "El blogger de Google";          // falso
+    datos[2] = "BloggerGoogle";          // verdadero
+    datos[3] = "Google Blogger";          // falso
+
+    var patron = /Blog.*Goog/;
+    // Patrón de búsqueda
+    // Contenga "Blog" cualquier caracter(.) 0 o más veces (*) y a continuación "Goog"
+    for (var i = 0; i < datos.length; i++)
+        alert(datos[i] + " " + patron.test(datos[i]));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión Eventos</title>
+</head>
+<body>
+<h1>Gestión tradicional de eventos</h1>
+<A ID="mienlace" href="pagina.html">Pulsa aqui</a>
+
+<script type="text/javascript">
+    /*    Se pueden poner varias acciones para un mismo evento.
+        Ojo! No se pone on!
+        Cuando hagamos click en "mienlace" se disparará la llamada a las tres funciones. Por cierto, el W3C no indica
+        el orden de disparo, por lo que no sabemos cual de las tres funciones se ejecutará primero. */
+
+    //El tercer parámetro true o false es para ver si se captura en
+    //True: fase de captura
+    //False: fase de burbujeo
+
+    document.getElementById("mienlace").addEventListener('click', alertar, false);
+    document.getElementById("mienlace").addEventListener('click', avisar, false);
+    document.getElementById("mienlace").addEventListener('click', chequear, false);
+
+    function alertar() {
+        alert("Te conectaremos con la página: " + this.href);
+    }
+
+    //Se pueden usar funciones sin declarar dentro de la definición de la acción por evento
+
+    element.addEventListener('click', function () {
+        this.style.backgroundColor = '#cc0000';
+    }, false);
+
+    //Eliminar un evento
+    elemento.removeEventListener('evento', función, false | true);
+
+    //Lista de las funciones que han sido regisrtadas a un elemento: eventListenerList,
+
+    //Evitar acción por defecto preventDefault().
+
+    //Dropagación del evento en la fase de burbujeo, disponemos del método stopPropagation().
+</script>
+
+</body>
+</html>

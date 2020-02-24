@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <title>DWEC05 - CONT_R22 Validacion de un Formulario</title>
+    <script src="2_7_ValidacionFormulario.js" type="text/javascript"></script>
+    <style type="text/css">
+        label {
+            width: 150px;
+            float: left;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 150px;
+            float: left;
+            margin-bottom: 5px;
+        }
+
+        fieldset {
+            background: #CCFF99;
+            width: 350px;
+        }
+
+        .error {
+            border: solid 2px #FF0000;
+
+        }
+    </style>
+</head>
+<body>
+<fieldset>
+    <legend>DWEC05 - Validación de un Formulario -</legend>
+    <form action="http://www.google.es" id="formulario" method="get" name="formulario">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" name="nombre" type="text"/>
+        <label for="apellidos">Apellidos:</label>
+        <input id="apellidos" name="apellidos" type="text"/>
+        <label for="edad">Edad:</label>
+        <input id="edad" maxlength="3" name="edad" type="text"/>
+        <label for="matricula">Matrícula Coche:</label>
+        <input id="matricula" name="matricula" type="text" value="XXXX AAA"/>
+        <label for="provincia">Provincia:</label>
+        <select id="provincia" name="provincia">
+            <option selected="selected" value="0">Seleccione Provincia</option>
+            <option value="H">Huesca</option>
+            <option value="ZA">Zaragoza</option>
+            <option value="T">Teruel</option>
+        </select>
+        <input id="limpiar" name="limpiar" type="reset" value="Limpiar"/>
+        <input id="enviar" name="enviar" type="submit" value="Enviar"/>
+    </form>
+</fieldset>
+</body>
+</html>

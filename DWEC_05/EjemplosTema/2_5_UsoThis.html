@@ -1,0 +1,38 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type">
+    <title>Uso de la palabra reservada this</title>
+
+    <script type="text/javascript">
+        function identificar(objeto) {
+            var atrName = objeto.name;
+            var atrId = objeto.id;
+            var atrValue = objeto.value;
+            var atrType = objeto.type;
+
+            alert("Datos del campo pulsado:\n\nName: " + atrName + "\nID: " + atrId + "\nValue: " + atrValue + "\nType: " + atrType);
+
+        }
+
+    </script>
+</head>
+<body>
+<h1>Trabajando con this</h1>
+<form action="pagina.php" id="formulario">
+    <p>
+        <label for="nombre">Nombre: </label>
+        <!-- Lllamamos al método cuando hacemos click y mandamos como argumento el propio elemento que lo activa. -->
+        <input id="nombre" name="nombre" onclick="identificar(this)" type="text" value="Constantino"/>
+        <label for="apellidos">Apellidos: </label>
+        <input id="apellidos" name="apellidos" onclick="identificar(this)" type="text" value="Veiga Perez"/>
+        <label for="edad">Edad: </label>
+        <input id="edad" name="edad" onclick="identificar(this)" type="password" value="55"/>
+        <label for="pais">Pais: </label>
+        España <input id="pais1" name="pais" onclick="identificar(this)" type="radio" value="ES"/>
+        Francia <input id="pais2" name="pais" onclick="identificar(this)" type="radio" value="FR"/>
+    </p>
+    Haga click en cada uno de los campos para ver más información.
+</form>
+</body>
+</html>

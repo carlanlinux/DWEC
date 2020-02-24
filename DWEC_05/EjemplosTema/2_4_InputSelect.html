@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DWEC05 - Trabajando con un objeto Select</title>
+    <script type="text/javascript">
+        function consultar() {
+            var objProvincias = document.getElementById("provincias");
+            var texto = objProvincias.options[objProvincias.selectedIndex].text;
+            var valor = objProvincias.options[objProvincias.selectedIndex].value;
+            alert("Datos de la opción seleccionada: " + texto + " " + valor + ".")
+        }
+    </script>
+</head>
+<body>
+<h1>Trabajando con un objeto Select</h1>
+<form action="pagina.php" id="formulario">
+    <p><label for="provincias">Seleccione provincia: </label>
+        <select id="provincias" name="provincias">
+            <option value="C">La Coruña</option>
+            <option value="LU">Lugo</option>
+            <option value="OU">Ourense</option>
+            <option value="PO">Pontevedra</option>
+        </select></p>
+    Selecciona una opción y pulsa el botón.
+    <input name="boton" onclick="consultar()" type="button" value="Consultar información de la opción"/>
+</form>
+</body>
+</html>

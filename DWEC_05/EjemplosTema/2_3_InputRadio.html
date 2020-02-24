@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DWEC05 - Trabajando con objetos input de tipo radio</title>
+
+    <script type="text/javascript">
+        function mostrarDatos() {
+            //Vemos el número de botones radio que hay con el mismo nombre
+            for (let i = 0; i < document.formulario.actores.length; i++) {
+                if (document.formulario.actores[i].checked) {
+                    alert(document.formulario.actores[i].value)
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+<h1>Trabajando con objetos de input de tipo radio</h1>
+<form action="stooges.php" name="formulario">
+    <fieldset>
+        <legend>Selecciona tu actor favorito:</legend>
+        <input checked id="actor-1" name="actores" type="radio" value="Kika Lorace"/>
+        <label for="actor-1">La Kika</label>
+        <input id="actor-2" name="actores" type="radio" value="Concha Velasco"/>
+        <label for="actor-2">La Concha</label>
+        <input id="actor-3" name="actores" type="radio" value="Peponcio"/>
+        <label for="actor-1">Peponcio</label>
+        <input id="consultar" name="consultar" onclick="mostrarDatos()" type="button" value="Consultar mis datos">
+    </fieldset>
+</form>
+</body>
+</html>
