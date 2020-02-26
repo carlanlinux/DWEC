@@ -4,12 +4,18 @@ nos aseguramos que todos los objetos estén disponibles para trabjar en las asig
 
 window.onload = inicializar;
 
+//----------------------------------------------------------//
 
 //Inicializamos la validación y primero comprobamos si la cookie tiene algún valor en contador.
 function inicializar() {
+    // Borramos la cookie si existe anteriormente para empezar a contar desde 0.
+    borrarCookie("contador");
+
     //Hacemos que se cargue la función de cambiar el texto a mayus que se tiene que hacer en todos los casos.
     aMayus();
     document.getElementById("enviar").addEventListener('click', validar, false);
+
+
     //Si existe el valor en la cookie entonces llamamos al evento que se va a encargar de la validación
     if (document.cookie[contador] != null) {
 
@@ -222,3 +228,14 @@ function validarHora() {
 
 }
 
+//función para crear la cookie contador
+crearCookie();
+{
+    document.cookie = "contador=0";
+}
+
+//función para leer la cookkie contador:
+leerCookie(nombre);
+{
+
+}
