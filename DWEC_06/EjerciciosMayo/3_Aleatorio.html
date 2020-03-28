@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cálculo de horas minutos y segundos</title>
+    <script type="text/javascript">
+        //Cargamos la el listener del botón que será quien llame a la función de comprobar los datos.
+        window.onload = function () {
+            document.getElementById("calcular_btn").addEventListener("click", calcular, false);
+        }
+    </script>
+
+</head>
+<style>
+    .checkOK {
+        display: block;
+        color: green;
+    }
+
+    .checkResult {
+        display: none;
+    }
+
+
+</style>
+
+<script type="text/javascript">
+
+    function calcular() {
+        let numero;
+        let par = "No es par";
+        let divisible3 = "No es divisible entre 3";
+        let multiplo = "La suma de sus cifras no son múltiplos de 3";
+
+        //Sacamos un número aleatoria entre 900 y 100.
+        //Usamos la funcion random de match que devuelve un número aleatorio entre 0 y 1.
+        //Lo multiplicamos entre un máximo de el limite más alto entre el más pequeño y le sumamos el pequeño, de esta
+        // forma nos aseguramos que esté entre los límites establecidos.
+        //Lo redondeamos para que quede sin decimales.
+        numero = Math.round(Math.random() * (900 - 100) + 100);
+
+        if (numero % 2 === 0) par = "Es par";
+        if (numero % 3 === 0) divisible3 = "Es Divisible entre 3";
+        let sumaCifras = sacarSuma(numero);
+        //Un número es múltiplo de otro cuando la división del primero entre el segundo es exacta. Queremos saber si  la
+        // suma de las cifras es múltiplo de 3
+        if (sumaCifras % 3 === 0) multiplo = "La suma de sus cifras ( " + sumaCifras + " ) son múltiplos de 3";
+
+
+        document.getElementById("checkResult").innerHTML = "<p>El número " + numero + " tiene las siguientes " +
+            "características:</p><p>" + par + ".</p><p>" + divisible3 + ".</p><p>" + multiplo + ".</p>";
+        document.getElementById("checkResult").className = "checkOK";
+
+        function sacarSuma(num) {
+            let cadena = num.toString();
+            let suma = 0;
+            for (let i = 0; i < cadena.length; i++) {
+                suma += parseInt(cadena[i])
+            }
+            return suma;
+        }
+
+    }
+
+</script>
+
+<body>
+<h2>Generador de números aleatorios</h2>
+<form>
+    <span class="checkResult" id="checkResult"></span>
+    <input id="calcular_btn" type="button" value="Generar número aleatorio">
+</form>
+</body>
+</html>

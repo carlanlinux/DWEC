@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Introducir número entre 0 y 1000</title>
+    <script type="text/javascript">
+        //Cargamos la el listener del botón que será quien llame a la función de comprobar los datos.
+        window.onload = function () {
+            document.getElementById("check_btn").addEventListener("click", comprobar, false);
+        }
+    </script>
+
+</head>
+<style>
+    .checkOK {
+        display: block;
+        color: green;
+    }
+
+    .checkResult {
+        display: none;
+    }
+
+    .checkNotOK {
+        display: block;
+        color: red;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    function comprobar() {
+        let valor = document.getElementById("insertNumero").value;
+        console.log(parseFloat(valor));
+        //Creamos el patrón
+        // \d -> que sea un dígito
+        // {1,4} -> que se repita entre 1 y 4 veces
+        //[,] --> Que tenga una coma entre medias
+        // \d -> que sea un dígito
+        // {1,2} -> que se repita entre 1 y 2 veces
+        let patron = /^\d{1,4}[,.]\d{1,2}$/;
+
+        if ((parseFloat(valor) <= 0 || parseFloat(valor) >= 1000) || !(patron.test(valor))) {
+            document.getElementById("checkResult").innerHTML = "El número introducido no sigue las indicaciones.";
+            document.getElementById("checkResult").className = "checkNotOK";
+        } else {
+            document.getElementById("checkResult").className = "checkOK";
+            //La función split devuelve un array con un separador
+            let entera = valor.split(",");
+            //como hemos puesto que el separador sea , y admmitimos . y coma si el array tiene longitud 1 es que no se
+            // ha hecho el split y por tanto hacemos el split con el punto.
+            if (entera.length === 1) entera = valor.split(".");
+            document.getElementById("checkResult").innerHTML = "La parte entera es " + entera[0] + " y la decimal "
+                + entera[1] + ".";
+        }
+
+    }
+
+</script>
+
+<body>
+<h2>Introducir número entre 0 y 1000</h2>
+<form>
+    <label for="insertNumero">Insertar número</label>
+    <input id="insertNumero" type="text"></form>
+<span class="checkResult" id="checkResult"></span>
+<input id="check_btn" type="button" value="Comprobar">
+</form>
+</body>
+</html>

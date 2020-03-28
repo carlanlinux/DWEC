@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cálculo de horas minutos y segundos</title>
+    <script type="text/javascript">
+        //Cargamos la el listener del botón que será quien llame a la función de comprobar los datos.
+        window.onload = function () {
+            document.getElementById("calcular_btn").addEventListener("click", calcular, false);
+        }
+    </script>
+
+</head>
+<style>
+    .checkOK {
+        display: block;
+        color: green;
+    }
+
+    .checkResult {
+        display: none;
+    }
+
+    .checkNotOK {
+        display: block;
+        color: red;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    function calcular() {
+        const segHoras = 3600;
+        const segMin = 60;
+        let valor = parseInt(document.getElementById("insertNumero").value);
+
+        if (valor > 0) {
+            let horas = Math.floor(valor / segHoras);
+            let minutos = Math.floor((valor % segHoras) / segMin);
+            let segundos = Math.floor(valor % segMin);
+            document.getElementById("checkResult").className = "checkOK";
+            document.getElementById("checkResult").innerHTML = "<p>El tiempo indicado son: </p><p>Horas: " + horas +
+                " </p><p> Minutos: " + minutos + "</p><p>Segundos: " + segundos + "</p>";
+        } else {
+            document.getElementById("checkResult").innerHTML = "El número introducido debe ser mayor que cero";
+            document.getElementById("checkResult").className = "checkNotOK";
+        }
+    }
+
+</script>
+
+<body>
+<h2>Introducir número entre 0 y 1000</h2>
+<form>
+    <label for="insertNumero">Insertar número de segundos</label>
+    <input id="insertNumero" type="numero"></form>
+<span class="checkResult" id="checkResult"></span>
+<input id="calcular_btn" type="button" value="Calcular">
+</form>
+</body>
+</html>
