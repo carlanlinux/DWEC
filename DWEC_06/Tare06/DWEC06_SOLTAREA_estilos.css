@@ -1,13 +1,10 @@
 .tablerodibujo {
-    border-top-width: thin;
-    border-right-width: thin;
-    border-bottom-width: thin;
-    border-left-width: thin;
     border-top-style: solid;
     border-right-style: solid;
     border-bottom-style: solid;
     border-left-style: solid;
-    width: auto;
+    width: 500px;
+    height: 500px;
 }
 
 .tablerodibujo td {
@@ -15,6 +12,7 @@
     height: 10px;
     margin: 0px;
     padding: 0px;
+
 }
 
 .color1 {
