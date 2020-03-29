@@ -1,10 +1,41 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-    <title>DWEC06 - SOLUCION TAREA</title>
+    <meta charset="UTF-8">
+    <title>Tarea DWEC06</title>
     <link href="DWEC06_SOLTAREA_estilos.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        //Función que se inicia al cargar la página
+        window.onload = function () {
+            crearTabla();
+        };
+
+        //Función para pintar la tabla
+        function crearTabla() {
+            //creamos la constante con el número de filas y de columnas.
+            const num = 30;
+            //Pintamos las filas con un buchle, elemento <tr>.
+            for (let i = 1; i <= num; i++) {
+                //Creamos elemento tr
+                let tr = document.createElement("tr");
+                //Le añadimos atributo id con el valor fila + número de fila
+                tr.setAttribute("id", "fila_" + i);
+                //Añadimos el elemento tr que hemos creado como  hijo a la tabla con ID lienzo
+                document.getElementById("lienzo").appendChild(tr);
+
+                //Ahora añadimos las columnas a la fila de la tabla con un segundo bucle
+                for (let j = 1; j <= num; j++) {
+                    //Creamos el elemento td
+                    let td = document.createElement("td");
+                    //Le añadimos el atributo Id con valor que identique la fila y la columna
+                    td.setAttribute("id", "celda_" + i + "_" + j);
+                    //Seleccionamso la fila que hemos creado en el buchle anterior y le añadimos como hijo el elemento
+                    // td que acabamos de crear.
+                    document.getElementById("fila_" + i).appendChild(td);
+                }
+            }
+        }
+    </script>
 
 </head>
 <body>
@@ -26,6 +57,11 @@
     </tr>
 </table>
 <p></p>
-<div id="zonadibujo"></div>
+<div id="zonadibujo">
+    <table id="lienzo">
+
+    </table>
+</div>
+
 </body>
 </html>

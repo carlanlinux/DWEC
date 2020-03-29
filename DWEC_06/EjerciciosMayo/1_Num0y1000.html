@@ -32,27 +32,49 @@
 
     function comprobar() {
         let valor = document.getElementById("insertNumero").value;
-        console.log(parseFloat(valor));
+        //console.log(parseFloat(valor));
         //Creamos el patrón
         // \d -> que sea un dígito
-        // {1,4} -> que se repita entre 1 y 4 veces
+        // {0,4} -> que se repita entre 0 y 4 veces para poder poner números del tipo 0.23 sin poner el 0
         //[,] --> Que tenga una coma entre medias
         // \d -> que sea un dígito
         // {1,2} -> que se repita entre 1 y 2 veces
-        let patron = /^\d{1,4}[,.]\d{1,2}$/;
 
-        if ((parseFloat(valor) <= 0 || parseFloat(valor) >= 1000) || !(patron.test(valor))) {
+        let patron = /^[0-9]?[0-9]?[0-9]?[,.]\d{1,2}$/;
+
+
+        if (!(patron.test(valor))) {
             document.getElementById("checkResult").innerHTML = "El número introducido no sigue las indicaciones.";
             document.getElementById("checkResult").className = "checkNotOK";
         } else {
-            document.getElementById("checkResult").className = "checkOK";
+
             //La función split devuelve un array con un separador
-            let entera = valor.split(",");
+            let splits = valor.split(",");
+            let entera;
+            let decimal;
             //como hemos puesto que el separador sea , y admmitimos . y coma si el array tiene longitud 1 es que no se
             // ha hecho el split y por tanto hacemos el split con el punto.
-            if (entera.length === 1) entera = valor.split(".");
-            document.getElementById("checkResult").innerHTML = "La parte entera es " + entera[0] + " y la decimal "
-                + entera[1] + ".";
+            if (splits.length === 1) splits = valor.split(".");
+
+            //Comprobamos si hay parte entera viendo si antes de la coma tenemos un número o no. Si no es así le asignamos
+            // el valor de 0 y al decimal le damos el valor del split.
+            if (isNaN(parseInt(splits[0]))) {
+                console.log(parseInt(splits[0]));
+                entera = 0;
+            } else entera = parseInt(splits[0]);
+            decimal = parseInt(splits[1]);
+
+            //Controlo que si lo que me viene tanto lo entero como lo decimal sea 0.00 me de error. Esto lo hago para el
+            // caso en que se ponga ".00"
+            if (entera === 0 && decimal === 0) {
+                document.getElementById("checkResult").innerHTML = "El número introducido no sigue las indicaciones.";
+                document.getElementById("checkResult").className = "checkNotOK";
+            } else {
+
+                document.getElementById("checkResult").className = "checkOK";
+                document.getElementById("checkResult").innerHTML = "La parte entera es " + entera + " y la decimal "
+                    + decimal + ".";
+            }
         }
 
     }
@@ -60,7 +82,7 @@
 </script>
 
 <body>
-<h2>Introducir número entre 0 y 1000</h2>
+<h2>Introducir número entre 0 y 1000 (sin inclir) </h2>
 <form>
     <label for="insertNumero">Insertar número</label>
     <input id="insertNumero" type="text"></form>
