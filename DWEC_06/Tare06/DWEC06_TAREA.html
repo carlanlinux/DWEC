@@ -5,44 +5,106 @@
     <title>Tarea DWEC06</title>
     <link href="DWEC06_SOLTAREA_estilos.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript">
+        //Establecemos las variables que vamos a utilizar en el script
+        var colorPincel = "color1";
+        var estadoPincel = false;
+        const claseCeldas = "celdaLienzo";
+        const clasePaleta = "colores";
+        const classSeleccionado = " seleccionado";
+        const tamanoLienzo = 30;
+
         //Función que se inicia al cargar la página
         window.onload = function () {
             crearTabla();
             listeners();
         };
 
+        //Metemos todos los listeners en una única función
         function listeners() {
             //Seleccionamos las celdas de la paleta de color con el evento click
-            let colores = document.getElementsByClassName("click");
-            for (let i = 0; i < colores.length; i++) {
-                colores[i].addEventListener("click", seleccionarColor, false);
+            let colores = document.getElementsByClassName(clasePaleta);
+            for (let i = 0; i < colores.length; i++) colores[i].addEventListener("click", seleccionarColor, false);
 
-            }
-            //Escuchamos las celdas en las que pintamos con el evento mouseover.
-            let celdas = document.getElementsByClassName("celdaLienzo");
-            for (let i = 0; i <; i++) {
+            //Escuchamos las celdas en las que pintamos con el evento mouseover y con el evento click para activar o desactivar.
+            let celdas = document.getElementsByClassName(claseCeldas);
+            for (let i = 0; i < celdas.length; i++) {
                 celdas[i].addEventListener("mouseover", pintar, false);
-
+                celdas[i].addEventListener("click", pincel, false);
             }
-
         }
 
-        //Seleccionamos la clase colorN de la celda en la que hemos hecho click para utilizarlo. Lo guardamos en una variable
-        // y cambiamos quitamos la clase seleccinada de todas  y la añadimos de la que se ha hecho click.
+        //Seleccionamos la clase colorN de la celda en la que hemos hecho click. Lo guardamos en una variable
+        // y quitamos la clase seleccinada de todos los colores  y se la añadimos a en la que se ha hecho click.
         function seleccionarColor() {
+            //Lo primero que hacemos es comprobar que ningún elemento pertenezca a la clase seleccionado
+            //guardamos todos los elementos que tienen la clase colores en un array.
+            let colores = document.getElementsByClassName(clasePaleta);
+            //Recorremos el array
+            for (let i = 0; i < colores.length; i++) {
+                //seleccionamos la clase cada elemento y la guardamos en una variable.
+                let clase = colores[i].getAttribute("class");
+                //hacemos un split de la clase actual utilizando como separador la clase seleccionado, nos devuelve un array
+                // que guardamos en una variable.
+                let resetClase = clase.split(classSeleccionado);
+                //le asignamos a cada elemento el atributo class cuyo valor será la primera posición del array anterior
+                colores[i].setAttribute("class", resetClase[0]);
 
+            }
+            //Obtenemos la clase del elemento que ha originado el evento (previamente se ha limpiado si estuviera seleccionado)
+            let claseOriginal = this.getAttribute("class");
+            //Le ponemos como atributo class si clase actual más la clase seleccionada (que ya viene en la constante con un espcio delante)
+            this.setAttribute("class", claseOriginal + classSeleccionado);
+            //Hacemos un split por espacios que nos devuelve un array y lo guardamos en una variable
+            let pincel = claseOriginal.split(" ");
+            //Le asignamos a la variable la posición del array que contiene el color
+            colorPincel = pincel[1];
+            console.log("El color del pincel es:" + colorPincel);
         }
 
         //Añadimos a la celda en concreto la clase que coincide con la clase de la palete de colores.
         function pintar() {
+            //Si el estado del pincel es true (está activo)
+            if (estadoPincel) {
+                //Borramos la clase del elemento que ha activado el evento.
+                this.removeAttribute("class");
+                //Ponemos de atributo class la clase que se ha empleado para identificar a todas las celdas del lienzo
+                // e incluimos la clase del color del pincel
+                this.setAttribute("class", claseCeldas + " " + colorPincel);
+            }
+        }
 
+        //Pintamos en el primer click, igual que el anterior pero pasamos el elemento que origina el click de activación
+        // como argumento
+        function pintarPimerClick(evt) {
+            if (estadoPincel) {
+                evt.removeAttribute("class");
+                evt.setAttribute("class", claseCeldas + " " + colorPincel);
+            }
+        }
+
+        //Activar y desactivar el pincel y mostrarlo su estado
+        function pincel() {
+            //Cambiamos el estado del pincel de activo a inactivo con cada click igualandolo a su inverso
+            estadoPincel = !estadoPincel;
+            console.log(estadoPincel);
+            //guardamos la celda con ID pincel
+            let celda = document.getElementById("pincel");
+            //si el estaod es activo hacemos que el texto de la celda se ponga a estado o inactivo
+            if (estadoPincel) {
+                celda.innerText = "Estado del pincel: activo";
+                //Si está activo llamamos al evento pintar pasándole el evento, ya que si esto no se hace cuando se hace
+                // click no pinta en ese primer click.
+                pintarPimerClick(this);
+
+            } else {
+                celda.innerText = "Estado del pincel: inactivo";
+            }
 
         }
 
         //Función para pintar la tabla
         function crearTabla() {
             //creamos la constante con el número de filas y de columnas.
-            const tamanoLienzo = 30;
             //Pintamos las filas con un buchle, elemento <tr>.
             for (let i = 1; i <= tamanoLienzo; i++) {
                 //Creamos elemento tr
@@ -64,7 +126,6 @@
                     document.getElementById("fila_" + i).appendChild(td);
                 }
             }
-
         }
 
     </script>
@@ -77,6 +138,7 @@
         Haga click en un color para comenzar a pintar
     </caption>
     <tr>
+        <!--Añado la clase colores para identificarlos a todos -->
         <td class="colores color1 seleccionado"></td>
         <td class="colores color2"></td>
         <td class="colores color3"></td>
@@ -90,6 +152,7 @@
 </table>
 <p></p>
 <div id="zonadibujo">
+    <!--Añado la clase liezo para identificar la tabla  -->
     <table border="2" height="500" id="lienzo" width="500">
 
     </table>
