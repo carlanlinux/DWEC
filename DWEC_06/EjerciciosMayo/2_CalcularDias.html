@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cálculo días hasta la fechay</title>
+</head>
+
+
+<body>
+
+<h2>Días transcurridos del año:</h2>
+<h2>Pendientes del año transcurridos del año:</h2>
+
+<script type="text/javascript">
+    /* 2 - Calcular los días  que han pasado desde el 1 de enero hasta hoy y de forma independiente cuantos faltan para
+     terminar el año, luego sumar ambos resultados y comprobar.*/
+
+    //Creamos un objeto date con la fecha actual y lo asignamos auna variable
+    var fechaActual = new Date();
+    //Sacamos al año actual para utilizarlo en el resto de funciones.
+    anoActual = fechaActual.getFullYear();
+
+    //Nos ponemos en la fecha del primer día del año actual
+    var fechaEnero = new Date(anoActual, 0, 1);
+
+    //Nos ponemos en la fecha del último día del año actual
+    var fechaDiciembre = new Date(anoActual, 11, 31);
+
+    //Pintamos los resultados de las operaciones
+    document.write("Han pasado " + diasPasados() + " de este año " + anoActual + ".<br>");
+    document.write("Quedan aún " + diasPendientes() + " para que finalice el año " + anoActual + ".<br>");
+    document.write("La suma de ambos hace un total de " + (diasPendientes() + diasPasados()) + " días que tiene el año " + anoActual + ".<br>");
+
+    function diasPasados() {
+        //Restamos la fecha actual menos la fecha del 1 de enero del año actual y nos devuelve el tiempo en milisegundos
+        let resta = fechaActual - fechaEnero;
+        //Convertimos los milisegundos a días: Multiplicamos por 24horas del día, 60 minutos que tiene cada hora,
+        // 60 segundos que tiene cada minuto y 1000 segundos que tiene cada mili segundo y lo redondeamos hacia arriba co
+        // un ceil ya que los días deben ser enteros
+        //devolvemos los días
+        return Math.ceil(resta / (1000 * 60 * 60 * 24));
+    }
+
+    //Hacemos la resta del último día de diciembre del año menos el día de hoy y convertimos a días y lo devolvemos.
+    function diasPendientes() {
+        let resta = fechaDiciembre - fechaActual;
+        return Math.ceil(resta / (1000 * 60 * 60 * 24));
+    }
+
+
+</script>
+
+</body>
+</html>

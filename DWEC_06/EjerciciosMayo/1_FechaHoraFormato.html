@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fecha de hoy</title>
+</head>
+
+<body>
+<h2>Fecha de hoy</h2>
+<script type="text/javascript">
+    /*    1 - Mostrar la fecha y hora actual de la siguiente forma:
+     Hoy es lunes, 30 de marzo de 2020 y son las 11:30 horas.  */
+
+    //Creamos un objeto fecha y lo asignamos a la variable fecha
+    let fecha = new Date();
+    //Sacamos los datos en diferentes variables
+    let diaSemanaNum = fecha.getDay();
+    let diaMes = fecha.getDate();
+    let mesNum = fecha.getMonth();
+    let ano = fecha.getFullYear();
+    let hora = fecha.getHours();
+    let minuto = fecha.getMinutes();
+    let diaSemana;
+    let mes;
+
+    //Como getDay devuelve un número hay que hacer un case para en función del día que nos muestre el nombre adecuado.
+    switch (diaSemanaNum) {
+        case 0:
+            diaSemana = "domingo";
+            break;
+        case 1:
+            diaSemana = "lunes";
+            break;
+        case 2:
+            diaSemana = "martes";
+            break;
+        case 3:
+            diaSemana = "miércoles";
+            break;
+        case 4:
+            diaSemana = "jueves";
+            break;
+        case 5:
+            diaSemana = "viernes";
+            break;
+        case 6:
+            diaSemana = "sábado";
+            break;
+    }
+
+    //como getMonth devuelve un número, hacemos otro case para los meses
+    switch (mesNum) {
+        case 0:
+            mes = "enero";
+            break;
+        case 1:
+            mes = "febrero";
+            break;
+        case 2:
+            mes = "marzo";
+            break;
+        case 3:
+            mes = "abril";
+            break;
+        case 4:
+            mes = "mayo";
+            break;
+        case 5:
+            mes = "junio";
+            break;
+        case 6:
+            mes = "julio";
+            break;
+        case 7:
+            mes = "agosto";
+            break;
+        case 8:
+            mes = "septiembre";
+            break;
+        case 9:
+            mes = "octubre";
+            break;
+        case 10:
+            mes = "noviembre";
+            break;
+        case 11:
+            mes = "diciembre";
+            break;
+
+    }
+
+
+    document.write("Hoy es " + diaSemana + ", " + diaMes + " de " + mes + " de " + ano + " y son las " +
+        hora + ":" + minuto + " horas.");
+</script>
+</body>
+</html>

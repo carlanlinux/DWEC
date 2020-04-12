@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fecha de hoy</title>
+    <script type="text/javascript">
+        //Usamos una función anómina al cargarse la página que añade un listener al botón para que ejecute una función
+        // cuando se haga click
+        window.onload = function () {
+            document.getElementById("confirmar").addEventListener("click", registrarTiempo, false)
+        };
+    </script>
+
+    <script type="text/javascript">
+        function registrarTiempo() {
+            document.getElementById("mensaje").className = "oculto";
+
+
+            let inicioHoras = parseInt(document.getElementById("hIncio").value);
+            console.log(inicioHoras);
+            let inicioMinutos = parseInt(document.getElementById("mInicio").value);
+            let finalHoras = parseInt(document.getElementById("hFinal").value);
+            let finalMinutos = parseInt(document.getElementById("mFinal").value);
+            let unidades = parseInt(document.getElementById("numUnidades").value);
+            let tiempoInicio = inicioHoras * 60 + inicioMinutos;
+            let tiempoFinal = finalHoras * 60 + finalMinutos;
+
+            /*        Validación del formulario:
+                        hora de finalización sea superior a las de inicio
+                        horas no superiores de 23
+                        minutos no superiores de 59
+                        que no haya valores nulos en los campos (que al hacer el parseo en el paso anterior todos sean números) */
+
+            if ((finalHoras + finalMinutos) < (inicioHoras + inicioMinutos) || inicioHoras >= 24 || finalHoras >= 24 ||
+                finalMinutos >= 60 || inicioHoras >= 60 || isNaN(inicioHoras) || isNaN(inicioMinutos) || isNaN(finalHoras)
+                || isNaN(finalMinutos) || isNaN(unidades)) {
+                //Si no se supera la validación mostrar mensaje y se le asigna clase para que muestre texto en rojo
+                document.getElementById("mensaje").innerHTML = "<p>Hora de finalización anterior a la de inicio o campos vacíos."
+                    + " Revise y vuelva a enviarlo</p>";
+                document.getElementById("mensaje").className = "error";
+                //Si pasa la validación:
+            } else {
+                //Sacamos el tiempo transcurrido restando el tiempo final menos el inicial entre los 60 minutos que tiene una
+                // hora y redondeamos.
+                let tiempoTranscurrido = Math.round((tiempoFinal - tiempoInicio) / 60);
+                //Calculamos número de unidades producido por hora
+                let unidadesHora = unidades / Math.trunc(tiempoTranscurrido);
+                /*            //Escribimos el mensaje a mostrar y lo guardamos en una variable string:
+                                Truncamos los datos de tiempo transcurrido para mostrar la parte entera
+                                Convertimos a string los datos de tiempo transcurrido, hacemos un split por el separador de decimales "."
+                                Devuelve un array separado a partir del separador que hemos marcado y nos quedamos con la posición 0 de
+                                 ese array */
+                let cadena = "Tiempo registrado correctamente: Un total de <b>" + Math.trunc(tiempoTranscurrido) + "</b> horas y <b>"
+                    + tiempoTranscurrido.toString().split(".")[0] + "</b> minutos.<br>Ha producido un total de <b>" + unidadesHora
+                    + "</b> cada hora";
+                //Cambiamos la clase e incluimos el mensaje en el div creado a tal efecto.
+                document.getElementById("mensaje").className = "correcto";
+                document.getElementById("mensaje").innerHTML = cadena;
+
+
+            }
+        }
+
+    </script>
+
+    <style>
+        .correcto {
+            display: block;
+            color: green;
+        }
+
+        .oculto {
+            display: none;
+        }
+
+        .error {
+            display: block;
+            color: red;
+        }
+
+    </style>
+
+</head>
+
+<body>
+<h2>Tiempos de producción</h2>
+<form>
+    <fieldset>
+        <legend>Inicio de tarea</legend>
+        <label for="hIncio">Hora:</label>
+        <!-- Lo hacemos número para facilitar una posterior validación, incluimos un min y un max y le damos por defecto
+        valor 0 para evitar nulls aunque posteriormente se valida en el JS -->
+        <input id="hIncio" max="23" min="0" required="required" type="number" value="0">
+        <label for="mInicio">Minuto</label>
+        <input id="mInicio" max="59" min="0" required="required" type="number" value="0">
+    </fieldset>
+    <p></p>
+    <fieldset>
+        <legend>Final de tarea</legend>
+        <label for="hFinal">Hora:</label>
+        <input id="hFinal" max="23" min="0" required="required" type="number" value="0">
+        <label for="mFinal">Minuto</label>
+        <input id="mFinal" max="59" min="0" required="required" type="number" value="0"><br>
+        <label for="numUnidades">Unidades producidas</label>
+        <input id="numUnidades" min="0" type="number" value="0">
+    </fieldset>
+
+    <input id="confirmar" type="button" value="Confirmar"><br>
+</form>
+<div class="oculto" id="mensaje">
+
+</div>
+
+</body>
+</html>
