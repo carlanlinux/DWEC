@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dolver charcodes y regenerar palabra</title>
+    <script type="text/javascript">
+        //Cogemos el texto del prompt, le quitamos los espacios y la ponemos en mayúsculas
+        let frase = prompt("Introducir una frase:").trim().toUpperCase();
+        let numero = "";
+        let palabra = "";
+
+        //Juntamos todos los números ASCI en un string
+        for (let i = 0; i < frase.length; i++) {
+            numero += frase.charCodeAt(i);
+        }
+
+        //Nos recorremos el string para sacar devolver la palabra haciendo el proceso anterior
+        for (let i = 0; i < numero.length; i++) {
+            let extr_cod = numero.charAt(i) + numero.charAt(++i);
+            palabra += String.fromCharCode(extr_cod);
+        }
+
+        document.write("El número resultante de los números ASCI de tu palabra es: " + numero);
+        document.write("<br>La palabra introducida en base a estos números es" + palabra);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

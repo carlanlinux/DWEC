@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cuenta Palabras y vocales de una frase</title>
+    <script type="text/javascript">
+        let frase = prompt("Introducir una frase:");
+        //Guardamos en un string las vocales con los posibles acentos del español
+        let vocales = "aeiouAEIOUáéíóúü";
+        let num_vocales = 0;
+        let num_mayus = 0;
+        let num_minus = 0;
+
+        //nos recorremos la frase introducida y hacemos las comprobaciones
+        for (let i = 0; i < frase.length; i++) {
+            //Comprobamos las vocales recorriéndonos el array de vocales
+            for (let j = 0; j < vocales.length; j++) {
+                if (frase[i] === vocales[j]) num_vocales++;
+            }
+            //Scamos el código ASCII de cada letra
+            let charCode = frase.charCodeAt(i);
+            //Minúsculas
+            if (charCode >= 97 && charCode <= 122) num_minus++;
+            //Mayúsculas
+            if (charCode >= 65 && charCode <= 90) num_mayus++;
+            //Ñ y ñ
+            if (charCode === 209) num_mayus++;
+            if (charCode === 241) num_minus++;
+        }
+
+        //Calcular número de palabras, utulizo una regex para el split de uno o más espacios.
+        let palabras = frase.split(/\s+/);
+
+        //Sacar por pantalla
+        document.write("El texto introducido contiene " + palabras.length + " palabras");
+        document.write("<br>El número de vocales es: " + num_vocales);
+        document.write("<br>El número de minúsculas es: " + num_minus);
+        document.write("<br>El número de minúsculas es: " + num_minus);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

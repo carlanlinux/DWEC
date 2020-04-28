@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora IMC</title>
+    <script>
+        window.onload = function () {
+            document.getElementById("calcular").addEventListener("click", calcularIMC, false);
+        };
+
+        function calcularIMC() {
+            document.getElementById("error").innerText = '';
+            let alturacm = parseFloat(document.getElementById("Altura").value);
+            let peso = parseFloat(document.getElementById("peso").value);
+
+            if (isNaN(alturacm) || isNaN(peso)) {
+                let error = "Introduzca la altura y el peso para proceder con el cálculo";
+                document.getElementById("error").innerText = error;
+            } else
+                document.getElementById("imc").value = (peso / ((alturacm / 100) * (alturacm / 100))).toFixed(2);
+
+        }
+    </script>
+
+    <style>
+        #reset {
+            display: block;
+            float: right;
+        }
+    </style>
+
+</head>
+<body>
+<form>
+    <fieldset id="calculadora">
+        <legend>Calcular IMC</legend>
+
+        <input id="reset" type="reset" value="Inicio">
+        <br>
+        <div>
+            <label for="Altura">Altura (cm)</label>
+            <input id="Altura" required step="1" type="number">
+            <br>
+            <label for="peso">Peso (kg)</label>
+            <input id="peso" required step="0.1" type="number">
+            <br>
+            <input id="calcular" type="button" value="Calcular IMC">
+            <input disabled id="imc" type="text">
+        </div>
+        <div id="error">
+
+        </div>
+    </fieldset>
+</form>
+</body>
+</html>

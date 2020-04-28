@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio Tabla</title>
+    <style>
+        table {
+            border: 2px solid black;
+        }
+
+
+        .celdaTabla {
+            border: 2px solid black;
+            text-align: center;
+            width: 60px;
+            height: 60px;
+        }
+
+        .amarillo {
+            background: yellow;
+
+        }
+
+    </style>
+
+    <script>
+        window.onload = function () {
+            //Creamos la tabla
+            crearTabla();
+            //Calculamos los números pares y mostramos texto
+            calcularPares();
+        };
+
+
+        function crearTabla() {
+            const tamanoTabla = 6;
+            //creamos la constante con el número de filas y de columnas (en este caso son las mismas).
+            //Pintamos las filas con un buchle, elemento <tr>.
+            for (let i = 1; i <= tamanoTabla; i++) {
+                //Creamos elemento tr
+                let tr = document.createElement("tr");
+                //Le añadimos atributo id con el valor fila + número de fila
+                tr.setAttribute("id", "fila_" + i);
+                //Añadimos el elemento tr que hemos creado como  hijo a la tabla con ID lienzo
+                document.getElementById("tabla").appendChild(tr);
+
+                //Ahora añadimos las columnas a la fila de la tabla con un segundo bucle
+                for (let j = 1; j <= tamanoTabla; j++) {
+                    //Creamos el elemento td
+                    let td = document.createElement("td");
+                    //Le añadimos el atributo Id con valor que identique la fila y la columna
+                    td.setAttribute("id", "celda_" + i + "_" + j);
+                    td.setAttribute("class", "celdaTabla");
+                    //Seleccionamso la fila que hemos creado en el buchle anterior y le añadimos como hijo el elemento
+                    // td que acabamos de crear.
+                    document.getElementById("fila_" + i).appendChild(td);
+                    document.getElementById("celda_" + i + "_" + j).innerText = numRandom();
+                }
+            }
+        }
+
+        function calcularPares() {
+            let sumapares = 0;
+            let celdas = document.getElementsByTagName("td");
+            for (let i = 0; i < celdas.length; i++) {
+                let numero = celdas[i].innerText;
+                if (numero % 2 === 0) {
+                    sumapares++;
+                    let atributos = celdas[i].getAttribute("class");
+                    celdas[i].setAttribute("class", "amarillo " + atributos);
+                }
+
+            }
+            if (!(sumapares === 0)) document.getElementById("pares").innerHTML = "Número de pares = " + sumapares;
+        }
+
+        function numRandom() {
+            //HAcemos un random que nos de entre 1 y 6, para que nos salga lo que un dado debemos multiplicar el
+            // random que da valores menor que 1 por el máximo valor que quermeos conseguir(6) y sumarle el mínimo (1)
+            // y para redndear hacia abajo usarmos floor
+            return Math.floor(Math.random() * 6 + 1);
+        }
+
+    </script>
+</head>
+<body>
+<h4>Tablero de 6x6</h4>
+<table id="tabla">
+
+</table>
+<br>
+<div id="pares"></div>
+</body>
+</html>
