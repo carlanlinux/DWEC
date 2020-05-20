@@ -1,0 +1,120 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Juego de las tres en raya</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+        window.onload = function () {
+            listeners();
+        };
+
+        let celdas_jugador = document.getElementsByClassName("jugador");
+        let celdas_vacias = document.getElementsByClassName("vacio");
+        let celdas_seleccionadas = document.getElementsByClassName("selected");
+
+        var posicion_inicial;
+        var posicion_final;
+
+
+        function listeners() {
+            {
+                for (let i = 0; i < celdas_jugador.length; i++) {
+                    celdas_jugador[i].addEventListener("click", getid, false);
+                }
+            }
+            {
+                for (let j = 0; j < celdas_vacias.length; j++) {
+                    celdas_vacias[j].addEventListener("click", getid, false);
+                }
+            }
+
+            let reset = document.getElementById("reset").addEventListener("click", borrarDatos, false);
+        }
+
+        function getid() {
+            //Si tenemos dos o más casillas seleccionadas no debe dejar seleccionar más hasta dar a botón reset.
+            if (celdas_seleccionadas.length <= 2) {
+
+                console.log("listener");
+                posicion_inicial = document.getElementById("posicion_inical");
+                posicion_final = document.getElementById("posicion_final");
+
+                if ((posicion_inicial.value) === "") {
+                    //Comprobamos que tenemos 3 celdas de jugador o más y que además tiene la clase de jugador para que
+                    // nos deje seleccionarla
+                    if (celdas_jugador.length >= 3 && this.getAttribute("class") === "jugador") {
+                        posicion_inicial.value = this.parentElement.getAttribute("id");
+                        this.parentElement.setAttribute("class", "selected");
+
+                    }
+                    //Si tenemos menos de 3 fichas, nos deja seleccionar y ponemos fichita y se colorea
+                    if (celdas_jugador.length < 3) {
+                        posicion_inicial.value = this.parentElement.getAttribute("id");
+                        this.parentElement.setAttribute("class", "selected");
+                        //Borramos imagen actual y ponemos ficha nueva
+                        this.setAttribute("src", "circle-Jug.png");
+                    }
+
+                } else {
+                    //Si tenemos menos de 3 fichas en el tablero salimos del if y no dejamos seleccionar otra casilla
+                    //y ponemos fichita y se colorea
+                    if (celdas_jugador.length < 3) return;
+                    if (posicion_final.value === "") {
+                        console.log("tine cosas");
+                        posicion_final.value = this.parentElement.getAttribute("id");
+                        this.parentElement.setAttribute("class", "selected");
+                        //Borramos imagen actual y ponemos ficha nueva
+                        this.setAttribute("src", "circle-Jug.png");
+                        //Borramos la fichita actual y la dejamos seleccionada para recordar origen.
+                        let borrarCirculito = posicion_inicial.value;
+                        document.getElementById(borrarCirculito).firstElementChild.setAttribute("src", "vacio.png");
+
+                    }
+                }
+            }
+        }
+
+        function borrarDatos() {
+            posicion_inicial.value = "";
+            posicion_final.value = "";
+            for (let i = 0; i < celdas_seleccionadas.length; i++) {
+                celdas_seleccionadas[i].removeAttribute("class");
+            }
+        }
+
+    </script>
+</head>
+<body>
+<h1>Partida de ANDRES</h1>
+<div id="container">
+    <table id="board">
+        <tbody>
+        <tr id="fila_1">
+            <td id="1_1"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+            <td id="1_2"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+            <td id="1_3"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+        </tr>
+        <tr id="fila_2">
+            <td id="2_1"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+            <td id="2_2"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+            <td id="2_3"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+        </tr>
+        <tr id="fila_3">
+            <td id="3_1"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+            <td id="3_2"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+            <td id="3_3"><img alt="Vacio" class="vacio" src="vacio.png"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<form action="" method="post" name="enviar_posicion">
+
+    <input id="posicion_inical" name="posicion_inicial" type="hidden" value="">
+    <input id="posicion_final" name="posicion_final" type="hidden" value="">
+    <input type="submit">
+</form>
+<button id="reset">Resetear movimientos</button>
+
+
+</body>

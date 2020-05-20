@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secuencia imágenesl</title>
+    <script type="text/javascript">
+        let numSegundos;
+        let numImagen = 0;
+        let active = false;
+        let aux;
+
+        window.onload = function () {
+            document.getElementsByTagName("input")[0].addEventListener("click", startInterval, false);
+            document.getElementsByTagName("input")[1].addEventListener("click", stopInterval, false);
+            document.getElementsByTagName("input")[3].addEventListener("input", display, false)
+        };
+
+
+        function display() {
+            numSegundos = document.getElementsByTagName("input")[2].value = document.getElementsByTagName("input")[3].value;
+            document.getElementsByTagName("input")[0].removeAttribute("disabled");
+        }
+
+        function startInterval() {
+            //Comprobamos que no esté ya activo
+            if (active !== true) {
+                myVar = setInterval(setBackground, numSegundos * 1000);
+            }
+        }
+
+        function setBackground() {
+            numImagen++;
+            aux = numSegundos;
+            if (numImagen < 5) {
+                document.getElementsByTagName("input")[0].setAttribute("disabled", "");
+                document.getElementsByTagName("input")[0].removeAttribute("disabled");
+                document.getElementsByTagName("div")[0].setAttribute("style", "width: 300px; height: 300px; background-image: url('imagen" + numImagen + ".jpg');");
+                if (active !== true) {
+                    countdown = setInterval(countDown, 1000);
+                    active = true;
+                }
+            } else {
+                document.getElementsByTagName("span")[0].innerHTML = "";
+                stopInterval(countdown);
+            }
+        }
+
+        function countDown() {
+            aux--;
+            document.getElementsByTagName("span")[0].innerHTML = aux;
+        }
+
+        function stopInterval() {
+            clearInterval(countdown);
+            clearInterval(myVar);
+            active = false;
+        }
+    </script>
+</head>
+<body>
+<div><span></span></div>
+<form>
+    <fieldset style="border: 0">
+        <input disabled style="width: 150px;" type="button" value="Iniciar">
+        <input disabled style="width: 150px;" type="button" value="Parar">
+    </fieldset>
+    <fieldset style="border: 0">
+        <input disabled style="width: 25px" type="text">
+        <input min="1" step="1" style="width: 75px" type="range" value="6">
+    </fieldset>
+</form>
+</body>
+</html>

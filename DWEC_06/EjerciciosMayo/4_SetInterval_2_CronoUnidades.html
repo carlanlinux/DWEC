@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cronómetro</title>
+
+</head>
+<body>
+<form>
+    <fieldset>
+        <legend>Contador de tiempo</legend>
+        <div id="demo"></div>
+    </fieldset>
+    <fieldset>
+        <legend>Controles del contador</legend>
+        <label for="selectUnits">Seleccion unidades</label>
+        <select id="selectUnits">
+            <option id="segundos" value="1000">Segundos</option>
+            <option id="decimas" value="100">Decimas</option>
+            <option id="selected" value="10">Centésimas</option>
+        </select>
+        <input onclick="startInterval()" type="button" value="Empezar crono">
+        <input disabled onclick="stopInterval(myVar)" type="button" value="Parar crono">
+        <input disabled onclick="resetInterval()" type="button" value="Reset crono">
+    </fieldset>
+</form>
+
+
+<script>
+    //Usamos variable para controlar estado
+    let active = false;
+    let unidades;
+    let tiempo = 0;
+
+
+    function setNombreUnidades() {
+        var nombreUnidades = "";
+        if (unidades === 1000) nombreUnidades = "Contador de tiempo en Segundos";
+        if (unidades === 100) nombreUnidades = "Contador de tiempo en Décimas de segundo";
+        if (unidades === 10) nombreUnidades = "Contador de tiempo en Centésimas de segundo";
+        document.getElementsByTagName("legend")[0].innerText = nombreUnidades;
+        document.getElementsByTagName("select")[0].setAttribute("disabled", "true");
+    }
+
+    function checkUnidades() {
+        //Meto en un array los select y compruebo cuál está selected y guardo su valor en una variable
+        let options = document.getElementsByTagName("option");
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].selected === true) {
+                unidades = parseInt(options[i].value);
+                setNombreUnidades();
+                document.getElementsByTagName("input")[0].setAttribute("disabled", "true");
+                document.getElementsByTagName("input")[1].removeAttribute("disabled");
+                document.getElementsByTagName("input")[2].removeAttribute("disabled");
+            }
+        }
+    }
+
+    //Comenzamos a pintar la hora
+    function startInterval() {
+        checkUnidades();
+        //Comprobamos que no esté ya activo
+        if (active !== true) {
+            active = true;
+            myVar = setInterval(contador, unidades);
+        }
+    }
+
+    //Función pausar contador
+    function stopInterval(myVar) {
+        document.getElementsByTagName("input")[0].removeAttribute("disabled");
+        //Si está activo entonces nos deja parar.
+        if (active === true) {
+            clearInterval(myVar);
+            active = false;
+        }
+        document.getElementsByTagName("input")[0].value = "Reanudar crono"
+    }
+
+    function contador() {
+        tiempo++;
+        let t = tiempo;
+        document.getElementById("demo").innerHTML = "" + t;
+    }
+
+    function resetInterval() {
+        startInterval();
+        tiempo = 0;
+    }
+</script>
+</body>
+</html>

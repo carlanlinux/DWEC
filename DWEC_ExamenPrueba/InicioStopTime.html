@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="iniciar()">Start time</button>
+//Con esto paras el interval, pero le tienes que meter la variable en la que se encuentra el intervalo de tiempo.
+//No hace falta función, con poner clear interval ya fuciona
+<button onclick="clearInterval(myVar)">Stop time</button>
+<p id="demo"></p>
+<script>
+
+
+    //Aquí marcas el intervalo de tiempo que se tiene que ejecutar la función en miliseconds, lo hace seguido
+    function iniciar() {
+        //OJO No poner var ni let para que sea una variable global, fuera del método.
+        myVar = setInterval(myTimer, 1000);
+    }
+
+    //timeout: para hacer una cosa de un determinado tiempo una sóla vez.
+
+    //ESta función te muestra la hora actual
+    function myTimer() {
+        let d = new Date();
+        document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+    }
+</script>
+</body>
+</html>

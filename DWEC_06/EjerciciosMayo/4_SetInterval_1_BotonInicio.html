@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reloj set interval</title>
+    <p id="demo"></p>
+
+    <button onclick="startInterval()">Iniciar contador</button>
+    <button onclick="stopInterval(myVar)">Stop time</button>
+
+    <script>
+        //Usamos variable para controlar estado
+        var active = false;
+
+        //Comenzamos a pintar la hora
+        function startInterval() {
+            //Comprobamos que no esté ya activo
+            if (active !== true) {
+                active = true;
+                myVar = setInterval(myTimer, 1000);
+            }
+        }
+
+        //Función pausar contador
+        function stopInterval(myVar) {
+            //Si está activo entonces nos deja parar.
+            if (active === true) {
+                clearInterval(myVar);
+                active = false;
+            }
+        }
+
+        function myTimer() {
+            var d = new Date();
+            document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

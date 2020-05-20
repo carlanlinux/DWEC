@@ -1,0 +1,17 @@
+td {
+    width: 200px;
+    height: 200px;
+    border: #0B61A5 5px solid;
+    background: #00aaaa;
+    align-content: center;
+}
+
+.selected {
+    border: #00aa00 5px solid;
+    background: #993399;
+}
+
+img {
+    width: 180px;
+    height: 180px;
+}
