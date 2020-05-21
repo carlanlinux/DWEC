@@ -12,6 +12,10 @@ body {
     padding: 20px;
 }
 
+.contacts {
+    background-color: lightblue;
+}
+
 .new-contact {
     background: #ddd;
 }
@@ -22,6 +26,18 @@ h1 {
 
 ul {
     list-style-type: none;
+}
+
+li {
+    border-bottom: 1px solid white;
+}
+
+li:last-child {
+    border: none;
+}
+
+button {
+    margin: 10 0 10 0
 }
 
 div {
