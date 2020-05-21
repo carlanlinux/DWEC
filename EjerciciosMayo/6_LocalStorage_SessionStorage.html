@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora IMC</title>
+    <script>
+        window.onload = function () {
+            document.getElementById("calcular").addEventListener("click", calcularIMC, false);
+            document.getElementById("recuperarLocal").addEventListener("click", getLocalData, false);
+            document.getElementById("recuperarSession").addEventListener("click", getSessionData, false);
+            document.getElementById("guardarLocal").addEventListener("click", setLocalData, false);
+            document.getElementById("guardarSession").addEventListener("click", setSessionData, false);
+            document.getElementById("reset").addEventListener("click", disableButtons, false);
+            document.getElementById("borrarLocal").addEventListener("click", removeLocal, false);
+            document.getElementById("borrarSesion").addEventListener("click", removeSession, false);
+            storageAvailable(localStorage);
+            storageAvailable(sessionStorage);
+        };
+
+        function disableButtons() {
+            document.getElementById("guardarLocal").setAttribute("disabled", "true");
+            document.getElementById("guardarSession").setAttribute("disabled", "true");
+        }
+
+        //Comprobar que se puede utlilizar session y localStorage
+        function storageAvailable(type) {
+            try {
+                var storage = window[type],
+                    x = '__storage_test__';
+                storage.setItem(x, x);
+                storage.removeItem(x);
+                return true;
+            } catch (e) {
+                return e instanceof DOMException && (
+                        // everything except Firefox
+                    e.code === 22 ||
+                    // Firefox
+                    e.code === 1014 ||
+                    // test name field too, because code might not be present
+                    // everything except Firefox
+                    e.name === 'QuotaExceededError' ||
+                    // Firefox
+                    e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                    // acknowledge QuotaExceededError only if there's something already stored
+                    storage.length !== 0;
+            }
+        }
+
+
+        function calcularIMC() {
+            document.getElementById("error").innerText = '';
+            let alturacm = document.getElementById("Altura").value;
+            let peso = document.getElementById("peso").value;
+            if (isNaN(alturacm) || isNaN(peso)) {
+                document.getElementById("error").innerText = "Introduzca la altura y el peso para proceder con el cálculo";
+            } else {
+                document.getElementById("imc").value = (peso / ((alturacm / 100) * (alturacm / 100))).toFixed(2);
+                document.getElementById("guardarLocal").removeAttribute("disabled");
+                document.getElementById("guardarSession").removeAttribute("disabled");
+            }
+
+        }
+
+        function setLocalData() {
+            setLocal("altura", document.getElementById("Altura").value);
+            setLocal("peso", document.getElementById("peso").value);
+            setLocal("imc", document.getElementById("imc").value);
+            document.getElementById("error").innerText = "Datos guardados en Local Storage"
+        }
+
+        function setSessionData() {
+            setsession("altura", document.getElementById("Altura").value);
+            setsession("peso", document.getElementById("peso").value);
+            setsession("imc", document.getElementById("imc").value);
+            document.getElementById("error").innerText = "Datos guardados en Session Storage"
+        }
+
+        function getLocalData() {
+            let altura = parseFloat(getlocal("altura"));
+            let peso = parseFloat(getlocal("peso"));
+            let imc = parseFloat(getlocal("imc"));
+            pintarDatos(altura, peso, imc);
+        }
+
+        function getSessionData() {
+            let altura = parseFloat(getsession("altura"));
+            let peso = parseFloat(getsession("peso"));
+            let imc = parseFloat(getsession("imc"));
+            pintarDatos(altura, peso, imc);
+        }
+
+        function pintarDatos(altura, peso, imc) {
+            if (!isNaN(altura) && !isNaN(peso) && !isNaN(imc)) {
+                document.getElementById("Altura").value = parseFloat(altura);
+                document.getElementById("peso").value = parseFloat(peso);
+                document.getElementById("imc").value = imc;
+                document.getElementById("error").innerText = "Datos recuperados de Local Storage"
+            } else {
+                document.getElementById("error").innerText = "Datos no encontrados en Local o Session Storage"
+            }
+        }
+
+        function setLocal(key, value) {
+            localStorage.setItem(key, value);
+        }
+
+        function getlocal(key) {
+            return localStorage.getItem(key);
+        }
+
+        function setsession(key, value) {
+            sessionStorage.setItem(key, value);
+        }
+
+        function getsession(key) {
+            return sessionStorage.getItem(key);
+        }
+
+        function removeSession() {
+            sessionStorage.clear();
+        }
+
+        function removeLocal() {
+            localStorage.clear();
+        }
+
+
+    </script>
+
+    <style>
+        #reset {
+            display: block;
+            float: right;
+        }
+    </style>
+
+</head>
+<body>
+<form>
+    <fieldset id="calculadora">
+        <legend>Calcular IMC</legend>
+
+        <input id="reset" type="reset" value="Inicio">
+        <br>
+        <div>
+            <label for="Altura">Altura (cm)</label>
+            <input id="Altura" required step="1" type="number">
+            <br>
+            <label for="peso">Peso (kg)</label>
+            <input id="peso" required step="0.1" type="number">
+            <br>
+            <input id="calcular" type="button" value="Calcular IMC">
+            <input disabled id="imc" type="text">
+        </div>
+        <div id="error">
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Guardar Datos</legend>
+        <div><input disabled id="guardarLocal" type="button" value="Guardar LocalStorage">
+            <input id="recuperarLocal" type="button" value="Leer LocalStorage">
+            <input id="borrarLocal" type="button" value="Borrar LocalStorage">
+        </div>
+        <div><input disabled id="guardarSession" type="button" value="Guardar Session Storage">
+            <input id="recuperarSession" type="button" value="Leer SessionStorage">
+            <input id="borrarSesion" type="button" value="Borrar SessionlStorage">
+
+        </div>
+    </fieldset>
+</form>
+</body>
+</html>

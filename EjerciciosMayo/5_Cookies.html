@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookies</title>
+    <script>
+        window.onload = function () {
+            document.getElementById("crearCookie").addEventListener("click", crearCookie, false);
+            document.getElementById("borrarCookie").addEventListener("click", borrarCookie, false);
+            document.getElementById("listarCookie").addEventListener("click", listarCookie, false);
+            document.getElementById("devolverValorCookie").addEventListener("click", devolverValorCookie, false);
+        };
+
+        function crearCookie() {
+            let nombre = prompt("Introducir nombre de la Cookie");
+            let valor = prompt("Introducir valor de la Cookie");
+            let minutos = prompt("Minutos de vida de la Cookie");
+            //Creamos un objeto fecha nuevo
+            let date = new Date();
+            //Le ponemos la fecha actual y le sumamos los minutos * 60seg * 1000 mls
+            //Si fueran días sería 24(horas por día) * 60 (60 min la hora) * 60 (60seg el muinuto) * 1000 ( 1000milisegundos cada segundo)
+            date.setTime(date.getTime() + (minutos * 60 * 1000));
+            //Lo pasamos a UTC string
+            let expira = "expires=" + date.toUTCString();
+            //Formamos la cookie entera con su nombre, valor ; y fehca de expiraicón y ruta
+            document.cookie = nombre + "=" + valor + ";" + expira + ";path=/";
+        }
+
+        function borrarCookie() {
+            let nombre = prompt("Introducir nombre de la Cookie");
+            //Creamos una fecha anterior a la feha actual
+            let date = new Date();
+            //Le restamos en vez de sumar para ponerla anterior a la actual
+            date.setTime(date.getTime() - 100000);
+            //Lo pasamos a UTC string
+            let expira = "expires=" + date.toUTCString();
+            //Formamos la cookie entera con su nombre, valor ; y fehca de expiraicón y ruta
+            document.cookie = nombre + "=" + "borrate" + ";" + expira + ";path=/";
+
+        }
+
+        function listarCookie() {
+            borrarTabla();
+            document.getElementsByTagName("div")[0].setAttribute("style", "margin-top: 20px;");
+            let cookie = [];
+            let cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                let posicionIgual = cookies[i].search("=");
+                //Sacamos el substreing de la posición 0 a la que se encuentra el igual
+                let nombre = cookie.push(cookies[i].substr(0, posicionIgual));
+                //Secacamos el substring a partir de la posición siguiente a la del igual.
+                let valor = cookie.push(cookies[i].substring(posicionIgual + 1));
+                //Creamos un elemento fila
+                let tr = document.createElement("tr");
+                //Le damos un id correspondiente a su número de fila
+                tr.setAttribute("id", "fila_" + i);
+                //Añadimos el elemento tr que hemos creado como  hijo del tbody donde queremos pintar la tabla
+                document.getElementById("tbody").appendChild(tr);
+
+                //Ahora añadimos las columnas a la fila de la tabla con un segundo bucle
+                for (let j = 0; j < cookie.length; j++) {
+                    //Creamos el elemento td
+                    let td = document.createElement("td");
+                    //Le añadimos el atributo Id con valor que identique la fila y la columna
+                    td.setAttribute("id", "celda_" + i + "_" + j);
+                    td.setAttribute("class", "celdaTabla");
+                    //Seleccionamso la fila que hemos creado en el buchle anterior y le añadimos como hijo el elemento
+                    // td que acabamos de crear.
+                    document.getElementById("fila_" + i).appendChild(td);
+                    document.getElementById("celda_" + i + "_" + j).innerText = cookie[j];
+                }
+                //Borramos el aray en cada vuelta
+                cookie = [];
+            }
+        }
+
+        function borrarTabla() {
+            //guardamos el elemento table body
+            let body = document.getElementById("tbody");
+            //Mientras que el table body tenga un fist child
+            while (body.firstChild) {
+                //Borramos ese firstchild
+                body.removeChild(body.firstChild);
+            }
+        }
+
+        function devolverValorCookie() {
+            let entrada = prompt("Introduzca nombre de la cookie a buscar");
+            let cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                let posicionIgual = cookies[i].search("=");
+                //Sacamos el substreing de la posición 0 a la que se encuentra el igual
+                let nombre = cookies[i].substr(0, posicionIgual);
+                if (entrada === nombre) {
+                    alert("El valor de la cookie " + entrada + " es: " + cookies[i].substring(posicionIgual + 1));
+                    return;
+                } else {
+                    alert("El la cookie introducida no existe");
+                }
+
+            }
+        }
+
+    </script>
+</head>
+<body>
+<form>
+    <fieldset>
+        <legend>Cookies</legend>
+        <input id="crearCookie" type="button" value="Crear Cookie">
+        <input id="borrarCookie" type="button" value="Borrar Cookie">
+        <input id="listarCookie" type="button" value="Listar Cookie">
+        <input id="devolverValorCookie" type="button" value="Buscar valor Cookie">
+    </fieldset>
+</form>
+<div style="margin-top: 20px; display: none">
+    <table>
+        <caption>Cookies</caption>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Valor</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

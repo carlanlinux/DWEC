@@ -1,0 +1,260 @@
+<!--
+Utilizando una base de datos en IndexedDB
+Crea un formulario con los datos que tu quieras, coches, productos, animales...
+Agrega los siguientes botones:
+Abrir Base: Abre o crea una base de datos en indexedDB para trabajar con los datos del formulario.
+Guardar: Guarda los datos reflejados en el formulario dentro de la base.
+Ver: A partir de la clave visualiza el resto de datos
+Modificar: Modifica datos correspondientes a la clave que se indique
+Nuevo: Limpia todos los inputs del formulario
+Borrar: Elimina el registro correspondiente a la clave que se indique.
+Listar: Genera un listado por pantalla de todos los datos guardados en la base.-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookies</title>
+    <script type="text/javascript">
+        //Creamos una variable donde guardaremos la base de datos.
+        let db;
+        //Seleccionamos la tabla sobre la que se van a montar los datos usando su etiqueta
+        const tablaDatos = document.getElementById('#tbody');
+
+        window.onload = function () {
+            document.getElementById("abrirBase").addEventListener("click", abrirBase, false);
+            document.getElementById("guardar").addEventListener("click", guardarFormulario, false);
+            document.getElementById("ver").addEventListener("click", mostrarDatos, false);
+            document.getElementById("modificar").addEventListener("click", modificarDatos, false);
+            document.getElementById("borrar").addEventListener("click", borrarDatos, false);
+            document.getElementById("listar").addEventListener("click", listarFormulario, false);
+            compatibildiadIndexedDB();
+        };
+
+        //Comprobamos que el navegador sea compatible
+        function compatibildiadIndexedDB() {
+            if (!window.indexedDB) {
+                console.log("IndexedDB no disponible en tu navegador.");
+            }
+        }
+
+        //Si no tuviéramos botón de abrir esta función la ejecutaríamos dentro del window.onload = function ()
+        function abrirBase() {
+            //Abrimos la base de datos con nombre y versión
+            let request = window.indexedDB.open("Clientes", 1);
+
+            //Comprobamos si hay algún error
+            request.onerror = function () {
+                console.log("Error con IndexedDB.");
+            };
+            //Si no hay error asignamos el resultado del request a la variable de base de datos
+            request.onsuccess = function () {
+                console.log("Base de datos abierta correctamente");
+                db = request.result;
+            };
+
+            //Definimos el schema
+            request.onupgradeneeded = function (e) {
+                let db = e.target.result;
+                //Definimos la primary Key
+                let objectStore = db.createObjectStore('Clients', {keyPath: 'id', autoIncrement: true});
+
+                //Definimos los índices
+                objectStore.createIndex('nombre', 'nombre', {unique: false});
+                objectStore.createIndex('apellidos', 'apellidos', {unique: false});
+                objectStore.createIndex('provincia', 'provincia', {unique: false});
+                objectStore.createIndex('localidad', 'localidad', {unique: false});
+                objectStore.createIndex('email', 'email', {unique: true});
+
+                console.log("Congiguración de la base de datos completada")
+            };
+        }
+
+
+        function guardarFormulario(e) {
+            //Capturamos el evento que ejecuta la función para evitar que haga la acción por defecto que sería refrescar
+            // la página
+            e.preventDefault();
+
+            //Cogemos los datos y los guardamos en variables
+            let campos = document.getElementsByTagName("input");
+            let nombre = campos[1].value;
+            let apellidos = campos[2].value;
+            let provincia = campos[3].value;
+            let localidad = campos[4].value;
+            let email = campos[5].value;
+
+            //Creamos un objeto que contenga el objeto completo que vamos a guardar
+            let nuevoCliente = {
+                nombre: nombre,
+                apellidos: apellidos,
+                provincia: provincia,
+                localidad: localidad,
+                email: email
+            };
+
+            //Creamos un objeto que guarde la base de datos y la transacción. Indicamos Qué eaquema de la base de datos usamos y tipo
+            //de operación a realizar.
+            let transaction = db.transaction(['Clients'], "readwrite");
+
+            //Creamos objetoObjectStore que contendrá el esquema dentro de la base de datos
+            let objectStore = transaction.objectStore('Clients');
+
+            //Añadimos el item al objeto que hemos creado con el esquema.
+            let request = objectStore.add(nuevoCliente);
+
+            //Una vez se ha completado, limpiamos el formulario
+            request.onsuccess = () => {
+                campos[1].value = "";
+                campos[2].value = "";
+                campos[3].value = "";
+                campos[4].value = "";
+                campos[5].value = "";
+            };
+
+            //Damos feedback de la operación en consola
+            transaction.oncomplete = () => {
+                console.log("Transacción completada en la Base de Datps");
+            };
+            transaction.onerror = () => {
+                console.log("ERROR: Transaction not completed")
+            }
+        }
+
+        function listarFormulario() {
+            //Borraos todos los elementos pintados de la lista en caso que haya algo. Mientras la lista tenga primerHijo,
+            // borramos hijo de la lista que sea este primer hijo.
+            /*
+                        while (tablaDatos.firstChild) {
+                            tablaDatos.removeChild(tablaDatos.firstChild);
+                        }
+            */
+
+            //Creamos un objeto ObjectStore para empezar la transacción y poder abrir un cursor usando nuestra base de datos
+            let objectStore = db.transaction('Clients').objectStore('Clients');
+
+            //Abrimos un cursor usando el objectStore y cuando sea exitoso definimos el cursor con los resultados
+            objectStore.openCursor().onsuccess = function (e) {
+                //Ya tenemos la variable cursor
+                let cursor = e.target.result;
+
+                //Mientras que tenga datos cursor los recogemos y que nos pinte la tabla
+                if (cursor) {
+                    //Creamos los elemento que necesitamos para montar una tabla.
+                    // Primero creamos la fila de la tabla
+                    //Creamos cada <td> con el nombre de cada campo que vamos a necesitar
+                    let tablerow = document.createElement('tr'), cellID = document.createElement('td'),
+                        cellNombre = document.createElement('td'), cellApellidos = document.createElement('td'),
+                        cellLocalidad = document.createElement('td'), cellProvincia = document.createElement('td'),
+                        cellEmail = document.createElement('td');
+
+                    //Añadimos los hijos <td> al elemento padre que hemos creado <tr>
+                    tablerow.appendChild(cellID);
+                    tablerow.appendChild(cellNombre);
+                    tablerow.appendChild(cellApellidos);
+                    tablerow.appendChild(cellApellidos);
+                    tablerow.appendChild(cellLocalidad);
+                    tablerow.appendChild(cellProvincia);
+                    tablerow.appendChild(cellEmail);
+
+                    //Añadimos el padre que hemos creado <tr> al table body que tenemos como constante en el incio.
+                    document.getElementById("tbody").appendChild(tablerow);
+                    document.getElementById("contenedor").setAttribute("style", "margin-top: 20px;");
+
+                    //Añadimos los datos sacados del cursor a cada elemento
+                    cellID.textContent = cursor.value.id;
+                    cellNombre.textContent = cursor.value.nombre;
+                    cellApellidos.textContent = cursor.value.apellidos;
+                    cellLocalidad.textContent = cursor.value.localidad;
+                    cellProvincia.textContent = cursor.value.provincia;
+                    cellEmail.textContent = cursor.value.email;
+
+                    //Se le dice que continue con el siguiente hasta que cursor esté vacío.
+                    console.log("Clientes mostrados en listado");
+                    cursor.continue();
+
+                }
+                //Si no encuentra nada
+                else {
+                    //Si no tiene hijos el cuerpo de la tabla
+                    if (!document.getElementById("tbody").firstChild) {
+                        document.getElementsByTagName('span')[0].textContent = "No se han encontrado datos";
+                        console.log("No hay datos");
+                    }
+                }
+            }
+        }
+
+        function mostrarDatos() {
+
+        }
+
+        function modificarDatos() {
+
+        }
+
+        function borrarDatos() {
+
+        }
+
+
+    </script>
+
+    <style>
+        div {
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+<form>
+    <fieldset>
+        <legend>Datos de clientes</legend>
+        <div>
+            <label for="id">ID</label><input id="id" type="text"> <br>
+            <label for="nombre">Nombre</label><input id="nombre" placeholder="Nombre" required type="text"> <br>
+            <label for="apellidos">Apellidos</label><input id="apellidos" placeholder="Apellidos" required
+                                                           type="text"><br>
+            <label for="provincia">Provincia</label><input id="provincia" placeholder="Provincia" required
+                                                           type="text"><br>
+            <label for="localidad">Localidad</label><input id="localidad" placeholder="Localidad" required
+                                                           type="text"><br>
+            <label for="email">Código Postal</label><input id="email" placeholder="Correo Electrónico" required
+                                                           type="text"><br>
+        </div>
+
+    </fieldset>
+    <fieldset>
+        <legend>Cookies</legend>
+        <input id="abrirBase" type="button" value="Abrir Base">
+        <input id="guardar" type="button" value="Guardar">
+        <input id="ver" type="button" value="Ver">
+        <input id="modificar" type="button" value="Modificar">
+        <input id="nuevo" type="reset" value="Nuevo">
+        <input id="borrar" type="button" value="Borrar">
+        <input id="listar" type="button" value="Listar">
+    </fieldset>
+</form>
+<span></span>
+<div id="contenedor" style="margin-top: 20px; display: none">
+    <table>
+        <caption>Cookies</caption>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Localidad</th>
+            <th>Provincia</th>
+            <th>Correo Electrónico</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
