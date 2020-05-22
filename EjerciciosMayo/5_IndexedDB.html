@@ -19,6 +19,7 @@ Listar: Genera un listado por pantalla de todos los datos guardados en la base.-
     <style>
         div {
             display: block;
+
         }
 
     </style>
@@ -47,18 +48,18 @@ Listar: Genera un listado por pantalla de todos los datos guardados en la base.-
             <input id="localidad" placeholder="Localidad" required type="text"><br>
             <label for="email">Código Postal</label>
             <input id="email" placeholder="Correo Electrónico" required type="email"><br>
+            <input hidden id="modificar" type="button" value="Modificar">
+            <input hidden id="borrar" type="button" value="Borrar">
         </div>
 
     </fieldset>
     <fieldset>
         <legend>Controles de la base de datos</legend>
         <input id="abrirBase" type="button" value="Abrir Base">
-        <input id="nuevo" type="button" value="Nuevo">
-        <input id="guardar" type="button" value="Guardar">
-        <input id="ver" type="button" value="Ver">
-        <input id="modificar" type="button" value="Modificar">
-        <input id="borrar" type="button" value="Borrar">
-        <input id="listar" type="button" value="Listar">
+        <input hidden id="nuevo" type="button" value="Nuevo">
+        <input hidden id="guardar" type="button" value="Guardar">
+        <input hidden id="ver" type="button" value="Ver">
+        <input hidden id="listar" type="button" value="Listar">
     </fieldset>
 </form>
 <div id="contenedor" style="margin-top: 20px; display: none">

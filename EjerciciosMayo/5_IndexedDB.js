@@ -56,19 +56,27 @@ function abrirBase() {
         escribirmensaje("Congiguración de la base de datos completada");
         console.log("Congiguración de la base de datos completada")
     };
+    campos[8].disabled = true;
+    campos[9].removeAttribute('hidden');
+    campos[10].removeAttribute('hidden');
+    campos[11].removeAttribute('hidden');
+    campos[12].removeAttribute('hidden');
+    campos[13].removeAttribute('hidden');
+
 }
 
-
-function guardarFormulario(e) {
+function guardarFormulario() {
     borrarTabla();
     //Capturamos el evento que ejecuta la función para evitar que haga la acción por defecto que sería refrescar
     // la página
-    e.preventDefault();
+    //e.preventDefault();
 
     //Borramos el mensaje del SPAN de notificaciones
     document.getElementsByTagName('span')[0].textContent = "";
 
+
     //Cogemos los datos y los guardamos en variables
+
     let nombre = campos[1].value;
     let apellidos = campos[2].value;
     let provincia = campos[3].value;
@@ -115,6 +123,57 @@ function guardarFormulario(e) {
         escribirmensaje("ERROR: transacción no completada");
     }
 }
+
+function modificarDatos() {
+    //Borramos la tabla
+    borrarTabla();
+
+
+    //Creamos la transacción de nuestra base de datos (db) de forma que podamos leer y escribir
+    let transaction = db.transaction(['Clients'], 'readwrite');
+
+    //Creamos un objeto ObjectStore, llamando a la transacción RW que hemos creado para poder abrir un cursor usando nuestra base de datos
+    let objectStore = transaction.objectStore('Clients');
+
+    //Abrimos un cursor usando el objectStore y cuando sea exitoso definimos el cursor con los resultados
+    objectStore.openCursor().onsuccess = function (e) {
+        //creamos la variable cursor que nos va a recorrer la base de datos
+        let cursor = e.target.result;
+        //Mientras que tenga datos cursor los recogemos y que nos pinte la tabla
+        if (cursor) {
+            //Sacamos el valor ID del cursor para comprarlo
+            let valorIdBD = Number(cursor.value.id);
+            //Si el cursor coincide con el id que tenemos en el campo
+            if (Number(valorIdBD) === Number(campos[0].value)) {
+                //Creamos un nuevo objeto para hacer el put y modificarlo
+                let nuevoObjeto = {
+                    id: cursor.value.id,
+                    nombre: campos[1].value,
+                    apellidos: campos[2].value,
+                    provincia: campos[3].value,
+                    localidad: campos[4].value,
+                    email: campos[5].value,
+                };
+                //Creamos variable para actualizar los datos donde llamamos al objectstore, método put y pasamos el objeto.
+                //Importante que le tenemos que pasar el objeto.
+                var requestUpdate = objectStore.put(nuevoObjeto);
+
+                requestUpdate.onerror = function (event) {
+                    escribirmensaje("No se han podido modificar los datos");
+                    console.log("No se han podido modificar los datos");
+                };
+                requestUpdate.onsuccess = function (event) {
+                    escribirmensaje("Datos borrados correctamente");
+                    console.log("Modificado");
+                }
+
+            } else {
+                cursor.continue();
+            }
+        }
+    }
+}
+
 
 function listarFormulario() {
     borrarTabla();
@@ -171,7 +230,8 @@ function listarFormulario() {
                 console.log("No hay datos");
             }
         }
-    }
+    };
+    campos[10].disabled = true;
 }
 
 
@@ -179,7 +239,6 @@ function mostrarDatos() {
     borrarTabla();
     //Guardamos el valor del formulario Id en una variable
     let idCliente = Number(prompt("Introducir ID de cliente"));
-    let encontrado = false;
     //Controlamos que nos venga un número para ejecutar los pasos sino mostramos mensaje de error
     //Creamos un objeto ObjectStore para empezar la transacción y poder abrir un cursor usando nuestra base de datos
     let objectStore = db.transaction('Clients').objectStore('Clients');
@@ -205,6 +264,8 @@ function mostrarDatos() {
                 //Se le dice que continue con el siguiente hasta que cursor esté vacío.
                 console.log("Clientes mostrados en listado");
                 escribirmensaje("Cliente encontrado. Mostrando datos en el formulario");
+                campos[7].removeAttribute('hidden');
+                campos[6].removeAttribute('hidden');
             } else {
                 cursor.continue();
             }
@@ -214,14 +275,13 @@ function mostrarDatos() {
             console.log("El ID seleccionado no existe. No se han encontrado datos ");
             document.getElementById('id').value = "";
         }
-    }
+    };
+    campos[6].style.visibility = "visible";
+    campos[7].style.visibility = "visible";
+    campos[9].disabled = true;
+    campos[10].disabled = true;
 }
 
-
-function modificarDatos(e) {
-    mostrarDatos();
-
-}
 
 function borrarDatos() {
     borrarTabla();
@@ -236,7 +296,6 @@ function borrarDatos() {
     //guardamos la petición en una variable
     let request = objectStore.delete(idCliente);
 
-    //************ REVISAR NO INFORMA CORRECTAMENTE ****************
     //Si la transacción se copmpleta con éxito mostramos feedback positivo
     transaction.oncomplete = () => {
         console.log(`¡Cliente ${idCliente} ha sido eliminado!`);
@@ -249,10 +308,15 @@ function borrarDatos() {
         escribirmensaje(`¡El Id ${idCliente} no existe!`);
     };
     borrarCampos();
+    campos[6].style.visibility = "hidden";
+    campos[7].style.visibility = "hidden";
+    campos[9].disabled = false;
 }
 
 function crearNuevo() {
     borrarCampos();
+    campos[6].style.visibility = "hidden";
+    campos[7].style.visibility = "hidden";
 }
 
 function borrarCampos() {
