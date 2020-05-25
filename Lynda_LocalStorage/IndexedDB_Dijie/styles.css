@@ -1,0 +1,29 @@
+html {
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+
+.new-contact, .contacts {
+    padding: 20px;
+}
+
+.new-contact {
+    background: #ddd;
+}
+
+h1 {
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+div {
+    margin-bottom: 10px;
+}

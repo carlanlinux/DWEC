@@ -33,7 +33,7 @@ Listar: Genera un listado por pantalla de todos los datos guardados en la base.-
 </header>
 
 <form>
-    <fieldset>
+    <fieldset id="datosCliente" style="visibility: hidden">
         <legend>Datos de clientes</legend>
         <div>
             <label for="id">ID</label>
@@ -46,10 +46,10 @@ Listar: Genera un listado por pantalla de todos los datos guardados en la base.-
             <input id="provincia" placeholder="Provincia" required type="text"><br>
             <label for="localidad">Localidad</label>
             <input id="localidad" placeholder="Localidad" required type="text"><br>
-            <label for="email">Código Postal</label>
+            <label for="email">Correo Electrónico</label>
             <input id="email" placeholder="Correo Electrónico" required type="email"><br>
-            <input hidden id="modificar" type="button" value="Modificar">
-            <input hidden id="borrar" type="button" value="Borrar">
+            <input id="modificar" style="visibility: hidden" type="button" value="Modificar">
+            <input id="borrar" style="visibility: hidden" type="button" value="Borrar">
         </div>
 
     </fieldset>
@@ -57,7 +57,7 @@ Listar: Genera un listado por pantalla de todos los datos guardados en la base.-
         <legend>Controles de la base de datos</legend>
         <input id="abrirBase" type="button" value="Abrir Base">
         <input hidden id="nuevo" type="button" value="Nuevo">
-        <input hidden id="guardar" type="button" value="Guardar">
+        <input disabled hidden id="guardar" type="button" value="Guardar">
         <input hidden id="ver" type="button" value="Ver">
         <input hidden id="listar" type="button" value="Listar">
     </fieldset>

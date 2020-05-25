@@ -56,12 +56,12 @@ function abrirBase() {
         escribirmensaje("Congiguración de la base de datos completada");
         console.log("Congiguración de la base de datos completada")
     };
-    campos[8].disabled = true;
-    campos[9].removeAttribute('hidden');
-    campos[10].removeAttribute('hidden');
-    campos[11].removeAttribute('hidden');
-    campos[12].removeAttribute('hidden');
-    campos[13].removeAttribute('hidden');
+    document.getElementById("abrirBase").disabled = "true";
+    document.getElementById("nuevo").removeAttribute('hidden');
+    document.getElementById("nuevo").removeAttribute('hidden');
+    document.getElementById("guardar").removeAttribute('hidden');
+    document.getElementById("ver").removeAttribute('hidden');
+    document.getElementById("listar").removeAttribute('hidden');
 
 }
 
@@ -77,11 +77,11 @@ function guardarFormulario() {
 
     //Cogemos los datos y los guardamos en variables
 
-    let nombre = campos[1].value;
-    let apellidos = campos[2].value;
-    let provincia = campos[3].value;
-    let localidad = campos[4].value;
-    let email = campos[5].value;
+    let nombre = document.getElementById("nombre").value;
+    let apellidos = document.getElementById("apellidos").value;
+    let provincia = document.getElementById("apellidos").value;
+    let localidad = document.getElementById("localidad").value;
+    let email = document.getElementById("email").value;
 
     //Creamos un objeto que contenga el objeto completo que vamos a guardar
     let nuevoCliente = {
@@ -104,11 +104,11 @@ function guardarFormulario() {
 
     //Una vez se ha completado, limpiamos el formulario
     request.onsuccess = () => {
-        campos[1].value = "";
-        campos[2].value = "";
-        campos[3].value = "";
-        campos[4].value = "";
-        campos[5].value = "";
+        document.getElementById("nombre").value = "";
+        document.getElementById("apellidos").value = "";
+        document.getElementById("apellidos").value = "";
+        document.getElementById("localidad").value = "";
+        document.getElementById("email").value = "";
     };
 
     //Damos feedback de la operación en consola y en un SPAN
@@ -116,6 +116,8 @@ function guardarFormulario() {
         console.log("Transacción completada en la Base de Datps");
         //Pintamos mensaje de confirmación en el SPAN de notificaciones
         escribirmensaje("Datos guardados correctamente");
+        document.getElementById('datosCliente').style.visibility = 'hidden';
+        document.getElementById('guardar').disabled = true;
     };
     transaction.onerror = () => {
         console.log("Error: transacción no completada");
@@ -144,15 +146,15 @@ function modificarDatos() {
             //Sacamos el valor ID del cursor para comprarlo
             let valorIdBD = Number(cursor.value.id);
             //Si el cursor coincide con el id que tenemos en el campo
-            if (Number(valorIdBD) === Number(campos[0].value)) {
+            if (Number(valorIdBD) === Number(document.getElementById("id").value)) {
                 //Creamos un nuevo objeto para hacer el put y modificarlo
                 let nuevoObjeto = {
                     id: cursor.value.id,
-                    nombre: campos[1].value,
-                    apellidos: campos[2].value,
-                    provincia: campos[3].value,
-                    localidad: campos[4].value,
-                    email: campos[5].value,
+                    nombre: document.getElementById("nombre").value,
+                    apellidos: document.getElementById("apellidos").value,
+                    provincia: document.getElementById("provincia").value,
+                    localidad: document.getElementById("localidad").value,
+                    email: document.getElementById("email").value,
                 };
                 //Creamos variable para actualizar los datos donde llamamos al objectstore, método put y pasamos el objeto.
                 //Importante que le tenemos que pasar el objeto.
@@ -163,7 +165,7 @@ function modificarDatos() {
                     console.log("No se han podido modificar los datos");
                 };
                 requestUpdate.onsuccess = function (event) {
-                    escribirmensaje("Datos borrados correctamente");
+                    escribirmensaje("Datos modificados correctamente");
                     console.log("Modificado");
                 }
 
@@ -231,12 +233,13 @@ function listarFormulario() {
             }
         }
     };
-    campos[10].disabled = true;
+
 }
 
 
 function mostrarDatos() {
     borrarTabla();
+    document.getElementById('datosCliente').removeAttribute('style');
     //Guardamos el valor del formulario Id en una variable
     let idCliente = Number(prompt("Introducir ID de cliente"));
     //Controlamos que nos venga un número para ejecutar los pasos sino mostramos mensaje de error
@@ -255,31 +258,35 @@ function mostrarDatos() {
                 //Añadimos los datos sacados del cursor a cada elemento
                 let campos = document.getElementsByTagName("input");
                 //Ojo poner CURSOR.VALUE.[clave] para sacar el valor
-                campos[0].value = cursor.value.id;
-                campos[1].value = cursor.value.nombre;
-                campos[2].value = cursor.value.apellidos;
-                campos[3].value = cursor.value.provincia;
-                campos[4].value = cursor.value.localidad;
-                campos[5].value = cursor.value.email;
+                document.getElementById("id").value = cursor.value.id;
+                document.getElementById("nombre").value = cursor.value.nombre;
+                document.getElementById("apellidos").value = cursor.value.apellidos;
+                document.getElementById("apellidos").value = cursor.value.provincia;
+                document.getElementById("localidad").value = cursor.value.localidad;
+                document.getElementById("email").value = cursor.value.email;
                 //Se le dice que continue con el siguiente hasta que cursor esté vacío.
                 console.log("Clientes mostrados en listado");
                 escribirmensaje("Cliente encontrado. Mostrando datos en el formulario");
-                campos[7].removeAttribute('hidden');
-                campos[6].removeAttribute('hidden');
+                document.getElementById("borrar").style.visibility = 'visible';
+                document.getElementById("modificar").style.visibility = 'visible';
+                document.getElementById('datosCliente').style.visibility = 'visible';
             } else {
                 cursor.continue();
             }
             //Si no encuentra nada que lo marque por consola y resetee el valor de ID del formulario
         } else {
+
             escribirmensaje(`El ID ${idCliente} no existe. No se han encontrado datos`);
             console.log("El ID seleccionado no existe. No se han encontrado datos ");
             document.getElementById('id').value = "";
+            document.getElementById('datosCliente').style.visibility = 'hidden';
+
         }
     };
-    campos[6].style.visibility = "visible";
-    campos[7].style.visibility = "visible";
-    campos[9].disabled = true;
-    campos[10].disabled = true;
+
+    document.getElementById("nuevo").removeAttribute('disabled');
+    document.getElementById("guardar").disabled = "true";
+
 }
 
 
@@ -300,6 +307,7 @@ function borrarDatos() {
     transaction.oncomplete = () => {
         console.log(`¡Cliente ${idCliente} ha sido eliminado!`);
         escribirmensaje(`¡Cliente ${idCliente} ha sido eliminado!`);
+        document.getElementById('datosCliente').style.visibility = 'hidden';
     };
     //Si la transacción devuelve algún error con éxito mostramos feedback negativo
 
@@ -308,25 +316,28 @@ function borrarDatos() {
         escribirmensaje(`¡El Id ${idCliente} no existe!`);
     };
     borrarCampos();
-    campos[6].style.visibility = "hidden";
-    campos[7].style.visibility = "hidden";
-    campos[9].disabled = false;
+    document.getElementById("modificar").style.visibility = "hidden";
+    document.getElementById("borrar").style.visibility = "hidden";
+    document.getElementById("nuevo").removeAttribute('disabled');
 }
 
 function crearNuevo() {
     borrarCampos();
-    campos[6].style.visibility = "hidden";
-    campos[7].style.visibility = "hidden";
+    document.getElementById('guardar').removeAttribute('disabled');
+    document.getElementById('datosCliente').removeAttribute('style');
+    document.getElementById("nuevo").removeAttribute('disabled');
+    document.getElementById("modificar").style.visibility = "hidden";
+    document.getElementById("borrar").style.visibility = "hidden";
 }
 
 function borrarCampos() {
     //Ojo poner CURSOR.VALUE.[clave] para sacar el valor
-    campos[0].value = "";
-    campos[1].value = "";
-    campos[2].value = "";
-    campos[3].value = "";
-    campos[4].value = "";
-    campos[5].value = "";
+    document.getElementById("id").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("apellidos").value = "";
+    document.getElementById("apellidos").value = "";
+    document.getElementById("localidad").value = "";
+    document.getElementById("email").value = "";
 }
 
 function borrarTabla() {
