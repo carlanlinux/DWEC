@@ -76,7 +76,8 @@
                 for (let i = 0; i < scriptArray.length; i++) {
                     for (let j = 0; i < scriptArray[i].length; j++) {
                         if (scriptArray[i][j] === NUMERO_A_CONTAR) contador++;
-                        html += scriptArray[i][j] + " - "
+                        let aux = scriptArray[i][j] + " - ";
+                        html += aux;
                     }
                     html += "<br>";
                 }
