@@ -101,9 +101,12 @@
             //Le quitamos la clase por si la tuviera de otros errores anterriores
             campoNombre.removeAttribute('class');
 
+            //Si el campo nombre no está vacío lo comentamos
             if (campoNombre.value !== "") {
+                //Guardamos el item en el session storage y pintamos mensaje
                 sessionStorage.setItem('Nombre', campoNombre.value);
                 document.getElementById('mensaje').innerText = 'Nombre guardado en la sesión correctamente';
+                //Si está vacío pintamos mensaje, ponemos el foco y marcamos clase error.
             } else {
                 //Insertamos texto en el div de los mensajes
                 document.getElementById('mensaje').innerText = 'Campo nombre vacío. No puede guardarse vacío';
@@ -116,9 +119,11 @@
         function recuperarNombre() {
             //Metemos en una variable los campos que vamos a usar para simplificar el código
             let campoNombre = document.getElementById('nombre');
+            //Comprobamos si hay algo en la sesión, si no lo hay indicamos mensaje
             if (sessionStorage.getItem('Nombre') === null) {
                 document.getElementById('mensaje').innerText = 'No existe nombre guardado en la sesión';
             } else {
+                //Si hay nombre en la sesión indicamos mensaje y lo pintamos en el campo de texto
                 campoNombre.value = sessionStorage.getItem('Nombre');
                 document.getElementById('mensaje').innerText = 'Nombre recuperado con éxito';
             }
