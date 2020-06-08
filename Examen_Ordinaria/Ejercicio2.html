@@ -83,14 +83,14 @@
 
             //si el botón tiene el valor mostrar password, cambiamos el tipo de campo de la contraseña a texto y al botón le
             // ponemos el texto de ocultar contraseña para su siguiente uso
-            if (botonPasswed.value === "Ver Password") {
+            if (botonPasswed.value === "Ver password") {
                 campoPasswd.setAttribute('type', 'text');
-                botonPasswed.value = "Ver Password";
+                botonPasswed.value = "Ocultar password";
                 //Si por el contrario el botón tiene otro texto (sólo puede ser Ocultar password) y entonces le devolvemos
                 // el tipo del input de la contraseña a password y cambiamos el botón a mostrar contraseña
             } else {
                 campoPasswd.setAttribute('type', 'password');
-                botonPasswed.value = "Ocultar Password";
+                botonPasswed.value = "Ver password";
             }
 
         }
@@ -120,7 +120,7 @@
                 document.getElementById('mensaje').innerText = 'No existe nombre guardado en la sesión';
             } else {
                 campoNombre.value = sessionStorage.getItem('Nombre');
-                document.getElementById('mensaje').innerText = 'Nombre recuperado con éxito' + sessionStorage.getItem('Nombre');
+                document.getElementById('mensaje').innerText = 'Nombre recuperado con éxito';
             }
         }
 
