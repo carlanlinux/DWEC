@@ -10,6 +10,10 @@
             width: 340px;
         }
 
+        h5 {
+            margin: 10px 0px;
+        }
+
         form {
             margin: 20px;
             width: 270px;
@@ -38,12 +42,19 @@
             border: solid 2px #FF0000;
 
         }
+
+        #mensaje {
+            height: 20px;
+            margin-left: 10px;
+            margin-bottom: 5px;
+        }
     </style>
     <script type="text/javascript">
+        //Añadimos un listener en el load de la ventana para cargar la función que inicializa el resto de listeners
         window.addEventListener("load", inicializar, false);
 
+        //Activamos el evento click de cada botón.
         function inicializar() {
-            //Activamos el evento click de cada botón.
             document.getElementById("comprobarPassword").addEventListener("click", comprobarPassword, false);
             document.getElementById("verPassword").addEventListener("click", verPassword, false);
             document.getElementById("guardarNombre").addEventListener("click", guardarNombre, false);
@@ -60,18 +71,18 @@
                         (?=.*[0-9]) --> Requiere que al menos un dígito aparezca en cualquier parte del string
                         (?=.*[a-z]) --> Requiere que al menos una minúscula aparezca en cualquier parte del string
                         (?=.*[A-Z]) --> Requiere que al menos una mayúsucla aparezca en cualquier parte del sitring
-                        .{8,32}     --> La contraseña debe tener 4 caracteres
+                        .{4}     --> La contraseña debe tener 4 caracteres
                          $          --> Final del string */
             let patron = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{4}$/;
 
+            //Si no coincide con la regexp la contrasñea no es válida y entonces mostramos mensaje, le asignamos el foco
+            // al campo de texto de la contraseña y la clase de error
             if (!patron.test(campoPasswd.value)) {
-                //Insertamos texto en el div de los mensajes
                 document.getElementById('mensaje').innerText = 'Password NO válido';
-                //Le asignamos el foco al campo de texto de la contraseña y la clase de error
                 campoPasswd.focus();
                 campoPasswd.className = 'error';
+                //Si pasa la comprobación la pass es correcta e indicamos que es válida
             } else {
-                //Insertamos texto en el div de los mensajes
                 document.getElementById('mensaje').innerText = 'Password válido';
             }
         }
@@ -81,13 +92,13 @@
             let campoPasswd = document.getElementById('password');
             let botonPasswed = document.getElementById('verPassword');
 
-            //si el botón tiene el valor mostrar password, cambiamos el tipo de campo de la contraseña a texto y al botón le
-            // ponemos el texto de ocultar contraseña para su siguiente uso
+            //si el botón tiene el valor ver password, cambiamos el tipo de campo de la contraseña a texto y al botón le
+            // ponemos el texto de ocultar password para su siguiente uso
             if (botonPasswed.value === "Ver password") {
                 campoPasswd.setAttribute('type', 'text');
                 botonPasswed.value = "Ocultar password";
                 //Si por el contrario el botón tiene otro texto (sólo puede ser Ocultar password) y entonces le devolvemos
-                // el tipo del input de la contraseña a password y cambiamos el botón a mostrar contraseña
+                // el tipo del input de la contraseña a password y cambiamos el botón a ver contraseña
             } else {
                 campoPasswd.setAttribute('type', 'password');
                 botonPasswed.value = "Ver password";
@@ -101,12 +112,12 @@
             //Le quitamos la clase por si la tuviera de otros errores anterriores
             campoNombre.removeAttribute('class');
 
-            //Si el campo nombre no está vacío lo comentamos
+            //Si el campo nombre no está vacío
             if (campoNombre.value !== "") {
                 //Guardamos el item en el session storage y pintamos mensaje
                 sessionStorage.setItem('Nombre', campoNombre.value);
                 document.getElementById('mensaje').innerText = 'Nombre guardado en la sesión correctamente';
-                //Si está vacío pintamos mensaje, ponemos el foco y marcamos clase error.
+                //Si está vacío pintamos mensaje de vacío, ponemos el foco y marcamos clase error.
             } else {
                 //Insertamos texto en el div de los mensajes
                 document.getElementById('mensaje').innerText = 'Campo nombre vacío. No puede guardarse vacío';
@@ -135,8 +146,8 @@
 <body>
 <div>
     <h1>DWEC - Ejercicio 2</h1>
-    <h6>Carlos Miguel de Lucas Ballesteros</h6>
-    <h6>Contraseña de 4 caracteres con al menos un dígito, una letra minúscula y una letra mayúscula</h6>
+    <h5>Carlos Miguel de Lucas Ballesteros</h5>
+    <h5>Contraseña de 4 caracteres con al menos un dígito, una letra minúscula y una letra mayúscula</h5>
     <form action="#" id="Login" name="Login">
         <fieldset>
             <legend>Datos de entrada</legend>

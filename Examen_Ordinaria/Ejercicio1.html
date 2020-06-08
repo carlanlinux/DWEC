@@ -19,6 +19,23 @@
             width: 120px;
         }
 
+        #lienzo {
+            position: relative;
+            left: 80px;
+            font-size: larger;
+            text-align: center;
+            margin: 40px 10px;
+            border: 1px solid black;
+            width: 100px;
+            padding: 15px;
+        }
+
+        #mensaje {
+            text-align: center;
+            margin-bottom: 10px;
+
+        }
+
     </style>
 
     <script type="text/javascript">
@@ -61,29 +78,66 @@
             console.log(nuevoArray);
             //Asignamos el array que acabamos de crear a la variable que tiene el array para el script.
             scriptArray = nuevoArray;
+            //Ocultamos el div del array cada vez que se crea uno nuevo
+            document.getElementById('lienzo').style.visibility = 'hidden';
+            document.getElementById('mensaje').style.visibility = 'hidden';
         }
 
 
         function verArray() {
+            //Creamos las variables para contador, para el HTML que vamos a montar en base a concatenaciones y una
+            // auxiliar para la concatenación además de las que vamos a usar para la diagonal principal y secundaria
             let contador = 0;
             let html = "";
+            let aux = "";
+            let diagoPrincipal = "";
+            let diagoSecundaria = "";
             //Comprobamos que se haya generado un array y si no lo hay mostramos mensaje
             if (scriptArray.length === 0) {
-                document.getElementById("mensaje").innerText = "No se ha generado aún ningún array"
+                document.getElementById("mensaje").innerText = "No se ha generado aún ningún array";
+                document.getElementById('mensaje').style.visibility = 'visible';
             }
             //En el caso que sí haya array lo mostramos realizando las operaciones que se piden
             else {
+                //Nos recorremos la primera fila del array
                 for (let i = 0; i < scriptArray.length; i++) {
-                    for (let j = 0; i < scriptArray[i].length; j++) {
+                    //Nos recorremos las columnas del array
+                    for (let j = 0; j < scriptArray[i].length; j++) {
+                        //Si el valor coincide con el número que queremos contar (3 en este caso) lo sumamos a contador
                         if (scriptArray[i][j] === NUMERO_A_CONTAR) contador++;
-                        let aux = scriptArray[i][j] + " - ";
+                        //Guardamos las diagonales en un string, podría haber usado arrays pero como su único objetivo
+                        // era mostrarlos por pantalla de momento cuando tanto el valor de la posición de la fila como
+                        // el de la columna es el mismo estamos ante la diagonal principal entonces lo guardamos en su variable con un espacio delante
+                        if (i === j) diagoPrincipal += " " + scriptArray[i][j];
+                        // Cuando la suma de las coordenadas i+j sea igual a al tamaño del propio array ahi hay un valor
+                        // de la diagonal secundaria y lo guardamos con su variable y el espacio correspondiente
+                        if (i + j === scriptArray.length - 1) diagoSecundaria += " " + scriptArray[i][j];
+                        //Si la variable que recorre es igual al número de columnas -1 quiere decir que hemos llegado
+                        // a la última de la fila y por tanto no queremos mostrar el guión al final. En caso contrario lo mostramos.
+                        if (j === NUMCOLUMNAS - 1) {
+                            aux = scriptArray[i][j];
+                        } else {
+                            aux = scriptArray[i][j] + " - ";
+                        }
+                        //Después de recorrernos cada posición añadimos a la variable html lo que hemos sacado
                         html += aux;
                     }
+                    //Ponemos un salto de línea al final de cada fila
                     html += "<br>";
                 }
+                //Pintamos en el div el HTML generado y ponemos el div visible
                 document.getElementById('lienzo').innerHTML = html;
+                document.getElementById('lienzo').style.visibility = 'visible';
+                //Mostramos en el div mensajes el resto de los mensajes y hacemos el div de mensajes visible
+                let mensajes = `El número ${NUMERO_A_CONTAR} sale: ${contador} veces.<br>`;
+                mensajes += `La diagonal principal es: ${diagoPrincipal}<br>`;
+                mensajes += `La diagonal secundaria es: ${diagoSecundaria}<br>`;
+                document.getElementById('mensaje').innerHTML = mensajes;
+                document.getElementById('mensaje').style.visibility = 'visible';
             }
+
         }
+
 
         //Creamos la función random que nos devuelva los números random según necesidad
         function randomNum() {
@@ -104,7 +158,7 @@
         <input id="crearArray" type="button" value="Crear nuevo Array">
         <input id="verArray" type="button" value="Ver Array">
     </form>
-    <div id="lienzo"></div>
+    <div id="lienzo" style="visibility: hidden"></div>
     <div id="mensaje"></div>
 </div>
 </body>
