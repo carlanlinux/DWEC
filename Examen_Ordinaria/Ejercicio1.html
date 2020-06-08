@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1 - Carlos Miguel de Lucas Ballesteros</title>
+    <style>
+        body > div {
+            border: 1px solid black;
+            width: 320px;
+        }
+
+        form {
+            display: inline-block;
+            margin-left: 30px;
+        }
+
+        form input {
+            margin: 5px;
+            width: 120px;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        //Creamos constantes para definir el tamaño del array y el núermo de randoms con la finalidad de hacer lo más
+        // mantenible posible el código
+        const NUMFILAS = 4;
+        const NUMCOLUMNAS = 4;
+        const RANDOM_MAX = 9;
+        const RANDOM_MIN = 1;
+        const NUMERO_A_CONTAR = 3;
+
+        //Creamos una variable de alcance para el script ya que la van a utilizar varias funciones, donde se guardará
+        // l Array con el que vamos a trabajar
+        var scriptArray = [];
+
+        //Cargamos los listeners cuando se carga la página
+        window.addEventListener("load", inicializar, false);
+
+        //Función que contiene los listeners para los botones
+        function inicializar() {
+            //Activamos el evento click de cada botón.
+            document.getElementById("crearArray").addEventListener("click", crearArray, false);
+            document.getElementById("verArray").addEventListener("click", verArray, false);
+        }
+
+        //Creamos al Array
+        function crearArray() {
+            //Definimos una variable local con un array vacío
+            let nuevoArray = [];
+            //HAcemos un bucle tantas veces como filas necesitemos y en cada fila incluimos un array vacío
+            for (let i = 0; i < NUMFILAS; i++) {
+                nuevoArray.push([]);
+                //Recorremos otro bucle tantas veces como columnas se necesite y en cada columna llamamos a nuestra función
+                // random y el valor que devuelve lo incluimos en el array
+                for (let j = 0; j < NUMCOLUMNAS; j++) {
+                    nuevoArray[i].push(randomNum());
+                }
+            }
+            //Pintammos en la consola el array
+            console.log(nuevoArray);
+            //Asignamos el array que acabamos de crear a la variable que tiene el array para el script.
+            scriptArray = nuevoArray;
+        }
+
+
+        function verArray() {
+            let contador = 0;
+            let html = "";
+            //Comprobamos que se haya generado un array y si no lo hay mostramos mensaje
+            if (scriptArray.length === 0) {
+                document.getElementById("mensaje").innerText = "No se ha generado aún ningún array"
+            }
+            //En el caso que sí haya array lo mostramos realizando las operaciones que se piden
+            else {
+                for (let i = 0; i < scriptArray.length; i++) {
+                    for (let j = 0; i < scriptArray[i].length; j++) {
+                        if (scriptArray[i][j] === NUMERO_A_CONTAR) contador++;
+                        html += scriptArray[i][j] + " - "
+                    }
+                    html += "<br>";
+                }
+                document.getElementById('lienzo').innerHTML = html;
+            }
+        }
+
+        //Creamos la función random que nos devuelva los números random según necesidad
+        function randomNum() {
+            //Al random como es menor de 0 lo muiltiplicamos por el máximo que queremos más el mínimo que queremos
+            // conseguir redondeandolo a la baja para obtener el número deseado.
+            return Math.floor(Math.random() * RANDOM_MAX + RANDOM_MIN);
+        }
+
+    </script>
+
+
+</head>
+<body>
+<div>
+    <h1>DWEC - Ejercicio 1</h1>
+    <h4>Carlos Miguel de Lucas Ballesteros</h4>
+    <form>
+        <input id="crearArray" type="button" value="Crear nuevo Array">
+        <input id="verArray" type="button" value="Ver Array">
+    </form>
+    <div id="lienzo"></div>
+    <div id="mensaje"></div>
+</div>
+</body>
+</html>
