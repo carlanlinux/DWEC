@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 2</title>
+
+    <style>
+        body > div {
+            border: 1px solid black;
+            width: 340px;
+        }
+
+        form {
+            margin: 20px;
+            width: 270px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        fieldset {
+            width: 270px;
+        }
+
+        input[type=button] {
+            display: block;
+            width: 150px;
+            margin: 10px;
+        }
+
+        .botones {
+            margin-top: 30px;
+        }
+
+        .error {
+            border: solid 2px #FF0000;
+
+        }
+    </style>
+    <script type="text/javascript">
+        window.addEventListener("load", inicializar, false);
+
+        function inicializar() {
+            //Activamos el evento click de cada botón.
+            document.getElementById("comprobarPassword").addEventListener("click", comprobarPassword, false);
+            document.getElementById("verPassword").addEventListener("click", verPassword, false);
+            document.getElementById("guardarNombre").addEventListener("click", guardarNombre, false);
+            document.getElementById("recuperarNombre").addEventListener("click", recuperarNombre, false);
+        }
+
+        function comprobarPassword() {
+            //Metemos en una variable el campo password para simplificar el código
+            var campoPasswd = document.getElementById('password');
+            //Le quitamos la clase por si la tuviera de otros errores anterriores
+            campoPasswd.removeAttribute('class');
+            /*          CREAMOS EL PATRÓN CON UNA REGEXP
+                        ^          -->Delimita el principio del string
+                        (?=.*[0-9]) --> Requiere que al menos un dígito aparezca en cualquier parte del string
+                        (?=.*[a-z]) --> Requiere que al menos una minúscula aparezca en cualquier parte del string
+                        (?=.*[A-Z]) --> Requiere que al menos una mayúsucla aparezca en cualquier parte del sitring
+                        .{8,32}     --> La contraseña debe tener 4 caracteres
+                         $          --> Final del string */
+            let patron = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{4}$/;
+
+            if (!patron.test(campoPasswd.value)) {
+                //Insertamos texto en el div de los mensajes
+                document.getElementById('mensaje').innerText = 'Password NO válido';
+                //Le asignamos el foco al campo de texto de la contraseña y la clase de error
+                campoPasswd.focus();
+                campoPasswd.className = 'error';
+            } else {
+                //Insertamos texto en el div de los mensajes
+                document.getElementById('mensaje').innerText = 'Password válido';
+            }
+        }
+
+        function verPassword() {
+            //Metemos en una variable los campos que vamos a usar para simplificar el código
+            let campoPasswd = document.getElementById('password');
+            let botonPasswed = document.getElementById('verPassword');
+
+            //si el botón tiene el valor mostrar password, cambiamos el tipo de campo de la contraseña a texto y al botón le
+            // ponemos el texto de ocultar contraseña para su siguiente uso
+            if (botonPasswed.value === "Ver Password") {
+                campoPasswd.setAttribute('type', 'text');
+                botonPasswed.value = "Ver Password";
+                //Si por el contrario el botón tiene otro texto (sólo puede ser Ocultar password) y entonces le devolvemos
+                // el tipo del input de la contraseña a password y cambiamos el botón a mostrar contraseña
+            } else {
+                campoPasswd.setAttribute('type', 'password');
+                botonPasswed.value = "Ocultar Password";
+            }
+
+        }
+
+        function guardarNombre() {
+            //Metemos en una variable los campos que vamos a usar para simplificar el código
+            let campoNombre = document.getElementById('nombre');
+            //Le quitamos la clase por si la tuviera de otros errores anterriores
+            campoNombre.removeAttribute('class');
+
+            if (campoNombre.value !== "") {
+                sessionStorage.setItem('Nombre', campoNombre.value);
+                document.getElementById('mensaje').innerText = 'Nombre guardado en la sesión correctamente';
+            } else {
+                //Insertamos texto en el div de los mensajes
+                document.getElementById('mensaje').innerText = 'Campo nombre vacío. No puede guardarse vacío';
+                //Le asignamos el foco al campo de texto de la contraseña y la clase de error
+                campoNombre.focus();
+                campoNombre.className = 'error';
+            }
+        }
+
+        function recuperarNombre() {
+            //Metemos en una variable los campos que vamos a usar para simplificar el código
+            let campoNombre = document.getElementById('nombre');
+            if (sessionStorage.getItem('Nombre') === null) {
+                document.getElementById('mensaje').innerText = 'No existe nombre guardado en la sesión';
+            } else {
+                campoNombre.value = sessionStorage.getItem('Nombre');
+                document.getElementById('mensaje').innerText = 'Nombre recuperado con éxito' + sessionStorage.getItem('Nombre');
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+<div>
+    <h1>DWEC - Ejercicio 2</h1>
+    <h6>Carlos Miguel de Lucas Ballesteros</h6>
+    <h6>Contraseña de 4 caracteres con al menos un dígito, una letra minúscula y una letra mayúscula</h6>
+    <form action="#" id="Login" name="Login">
+        <fieldset>
+            <legend>Datos de entrada</legend>
+            <label for="nombre">Nombre</label><input id="nombre" name="nombre" placeholder="Nombre" required
+                                                     type="text">
+            <!--            Usamos el atributo maxlength para aplicar la restricción de cuatro caracteres-->
+            <label for="password">Nombre</label><input id="password" maxlength="4" name="password"
+                                                       placeholder="Contraseña" required type="password">
+            <div class="botones">
+                <input id="comprobarPassword" type="button" value="Comprobar Password">
+                <input id="verPassword" type="button" value="Ver password">
+            </div>
+            <div class="botones">
+                <input id="guardarNombre" type="button" value="Guardar Nombre">
+                <input id="recuperarNombre" type="button" value="Recuperar Nombre">
+            </div>
+
+        </fieldset>
+    </form>
+    <div class="mensajes" id="mensaje"></div>
+</div>
+</body>
+</html>

@@ -123,6 +123,7 @@ function validarEmail() {
     +([\w-]{2,4})$ -->  Terminará con 2 a 4 caracteres alfanuméricos incluidos el guión
      */
 
+
     let patron = /^[\w-.]{2,}@([\w-]{2,}\.)+([\w-]{2,4})$/;
     //Si no se cumple el patrón
     if (!patron.test(email)) {
@@ -180,11 +181,11 @@ function validarFechas() {
 }
 
 function validarTelefonos() {
-    /* Los teléfonos empiezan en ES por 9 o 6 y está formado por 9 numeros
+    /* Los teléfonos empiezan en ES por 9,6 o 7 y está formado por 9 numeros
     /^[69]\ --> Empieza por 6 o 9
     \d{8}$/ --> 8 números.
     */
-    let patron = /^[69]\d{8}$/;
+    let patron = /^[679]\d{8}$/;
 
     if (!patron.test(document.getElementById("telefono").value)) {
         document.getElementById("errores").innerHTML = "Error: El teléfono introducido es incorrecta";
@@ -200,10 +201,10 @@ function validarTelefonos() {
 
 function validarHora() {
     /*
-    /^(0?[1-9]|1\d|2[0-3]) --> Comenzamos con un 0 (no obligatorio) y un dígito del 1 al 9, ó un 1 y un dígito numérico,
-    ó un 2 y un dígito de 0 a 3,
+    /^(0?[1-9]|1\d|2[0-3]) --> Comenzamos con un 0 (no obligatorio) y un dígito del 1 al 9, ó un 1 y un dígito numérico
+    (hasta las 19 horas), ó un 2 y un dígito de 0 a 3 (hasta las 23)
     : --> dos puntos
-    ([0-5]?\d)$/ --> un dígito entre el 0 y el 5 (no obligatorio)
+    ([0-5]?\d)$/ --> un dígito entre el 0 y el 5 (no obligatorio) y un dígito cualquiera (No puede superar lo 59 segundos)
     */
 
     let patron = /^(0?[1-9]|1\d|2[0-3]):([0-5]?\d)$/;

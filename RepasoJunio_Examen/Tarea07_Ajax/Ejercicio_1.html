@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tarea DWEC 07 - Ejercicio 1</title>
+</head>
+<body>
+<h1>AJAX</h1>
+<div id="texto">
+    <button id="cambiaContenido">Cambia el contenido</button>
+</div>
+<script type="text/javascript">
+    document.getElementById("cambiaContenido").addEventListener("click", cambiaContenido, false);
+
+    function cambiaContenido() {
+        var xhr = new XMLHttpRequest();
+
+        //Enviar solicitud al servidor con . (Si se usa post pasar params y datos en URL)
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 1) console.log("1: server connection established");
+            if (this.readyState === 2) console.log("2: request received");
+            if (this.readyState === 3) console.log("3: processing request");
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("texto").innerHTML = this.responseText;
+                if (this.readyState === 4) console.log("4: request finished and response is ready");
+            }
+        };
+        /* .open: especifica la solicitud
+        -GET/POST: Vamos a usar GET porque no vamos a enviar parámetros
+        -Archivo a procesar: sample.txt
+        -True: asíncrono
+         */
+        xhr.open("GET", "sample.txt", true);
+        xhr.send();
+    }
+</script>
+</body>
+</html>

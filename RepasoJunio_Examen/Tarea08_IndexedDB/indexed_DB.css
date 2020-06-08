@@ -1,0 +1,33 @@
+#contenedor {
+    margin: auto;
+    position: relative;
+    width: 90%;
+    font-size: 18px;
+}
+
+#cajaformulario {
+    float: left;
+    padding: 20px;
+}
+
+#listado {
+    float: left;
+    width: 410px;
+    margin-left: 20px;
+    padding: 20px;
+}
+
+#clave, #color, #precio {
+    width: 180px;
+    font-size: 24px;
+}
+
+input {
+    width: 120px;
+    font-size: 18px;
+}
+
+#cajadatos div {
+    padding: 1px;
+    border-bottom: 1px solid grey;
+}

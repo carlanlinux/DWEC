@@ -8,14 +8,14 @@
 <script type="text/javascript">
     //Un literal es un valor fijo que se especifica en JavaScript. Un objeto literal será un conjunto, de cero o más
     //parejas del tipo nombre:valor.
-    avion = { marca:"Boeing", modelo:"747", pasajeros:"450"};
+    avion = {marca: "Boeing", modelo: "747", pasajeros: "450"};
     //Es igual que ponerlo
-    var avion = new Object();
+    var avion = {}; //Sepuede simplificar con el literal de objeto {}
     avion.marca = "Boeing";
     avion.modelo = "747";
     avion.pasajeros = "450";
 
-    //Para referirnos desde JavaScript a una propiedad del objeto avión podríamos hacerlo con:
+    //Para referirnos desde JavaScript a una propiedad del objeto avión podríamos hacerlo con notación objeto o array:
     document.write(avion.marca);
     document.write(avion["modelo"]);
 
@@ -35,12 +35,11 @@
     ];
 
     //Recorrer el Array con todos los objetos
-    for (var i=0; i< datos.length; i++)
-    {
-        document.write("Centro ID: "+datos[i].id+" - ");
-        document.write("Nombre: "+datos[i].nombrecentro+" - ");
-        document.write("Localidad: "+datos[i].localidad+" - ");
-        document.write("Provincia: "+datos[i].provincia+"<br/>");
+    for (let i = 0; i < datos.length; i++) {
+        document.write("Centro ID: " + datos[i].id + " - ");
+        document.write("Nombre: " + datos[i].nombrecentro + " - ");
+        document.write("Localidad: " + datos[i].localidad + " - ");
+        document.write("Provincia: " + datos[i].provincia + "<br/>");
     }
 
 

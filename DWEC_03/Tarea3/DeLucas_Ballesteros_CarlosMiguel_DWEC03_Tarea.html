@@ -9,7 +9,7 @@
 
         //Función par
         function abrirVentana() {
-            nuevaVentana = window.open("", "ventana2", "height=400, width=600, resizable=no, status=yes" );
+            nuevaVentana = window.open("", 'ventana2', 'height=400, width=600, resizable=no, status=yes');
             nuevaVentana.document.write("<p><h3>Ejemplo de ventana nueva</h3></p>");
             nuevaVentana.document.write("La URL completa de la ventana es: <b>" + nuevaVentana.location.toString() + "</b><br>");
             nuevaVentana.document.write("El protocolo utilizado es: <b>" + nuevaVentana.location.protocol + "</b><br>" );

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tarea DWEC 07 - Ejercicio 1</title>
+</head>
+<body>
+<h1>Colección de CDs</h1>
+<div id="texto">
+    <button id="cargarCatalogo">Cargar Catalogo</button>
+</div>
+<table id="tabla"></table>
+<script type="text/javascript">
+    document.getElementById("cargarCatalogo").addEventListener("click", cargarCatalogo, false);
+
+    function cargarCatalogo() {
+        //Creamos el objeto xhr
+        var xhr = new XMLHttpRequest();
+
+        //Enviar solicitud al servidor con . (Si se usa post pasar params y datos en URL)
+        /* .open: especifica la solicitud
+        -GET/POST: Vamos a usar GET porque no vamos a enviar parámetros
+        -Archivo a procesar: sample.txt
+        -True: asíncrono
+        */
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                cargarXML(this);
+            }
+        };
+        xhr.open("GET", "cd_catalog.xml", true);
+        xhr.send();
+    }
+
+    function cargarXML(xml) {
+        //Le asignamos el XML que nos ha venido como respuesta a la variable para poder tratarlo
+        let docXML = xml.responseXML;
+        //Pintamos la tabla
+        let tabla = "<tr><th>Artista</th><th>Titulo</th><th>Precio</th></tr>";
+        //Campturamos los elementos que queremos usanod el DOM
+        let discos = docXML.getElementsByTagName("CD");
+        let precio_total = 0;
+        let num_discos = 0;
+        for (let i = 0; i < discos.length; i++) {
+            if (discos[i].getElementsByTagName("COUNTRY")[0].textContent === "UK") {
+                num_discos++;
+                tabla += "<tr><td>";
+                tabla += discos[i].getElementsByTagName("ARTIST")[0].textContent;
+                tabla += "</td><td>";
+                tabla += discos[i].getElementsByTagName("TITLE")[0].textContent;
+                tabla += "</td><td>";
+                tabla += discos[i].getElementsByTagName("PRICE")[0].textContent;
+                precio_total += parseFloat(discos[i].getElementsByTagName("PRICE")[0].textContent);
+                tabla += "</td></tr>"
+            }
+        }
+        tabla += "</td><th>Precio total de los discos de UK: " + (precio_total).toFixed(2) + " EUR</th></td>";
+        tabla += "</td><th>Precio medio de los discos de UK: " + (precio_total / num_discos).toFixed(2) + " EUR</th></td>";
+        document.getElementById("tabla").innerHTML = tabla;
+    }
+</script>
+</body>
+</html>

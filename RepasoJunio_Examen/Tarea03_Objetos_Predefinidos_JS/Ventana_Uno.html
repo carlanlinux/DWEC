@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        //Creamos una variable donde guardaremos la ventana nueva
+        var newWindow;
+
+        //Creamos la función para abir la nueva ventana
+        function abrirVentana() {
+            //Indicamos location, title, y opciones, donde metemos tamaño, si se puede mover y si queremos status bar
+            newWindow = window.open("", "ventana", "height=400, width=600, resizable=no, status=yes");
+            //Nos situamos en la nueva ventana que acabamos de crear y vamos pintando en su HTML
+            newWindow.document.write("<h3>Ejemplo de nueva ventana</h3>");
+            //URL de la ventana
+            newWindow.document.write("La URL completa de la ventana es <b>" + newWindow.location.toString() + "</b>.<br>")
+            //Protocolo
+            newWindow.document.write("El protocolo utilizado es <b>" + newWindow.location.protocol + "</b>.<br>");
+            //Nombre del navegador
+            newWindow.document.write("El nombre del navegador utilizado es <b>" + newWindow.navigator.appCodeName +
+                "</b> más conocido como <b>" + newWindow.navigator.appName + "</b>.<br>");
+            //Comprobamos si tiene Java
+            if (newWindow.navigator.javaEnabled()) {
+                newWindow.document.write("Java <b>SI</b> está habilitado.<br>");
+            } else {
+                newWindow.document.write("Java <b>NO</b> está habilitado");
+            }
+            //Cargamos un iframe
+            newWindow.document.write("<iframe src='prueba.html' height='800' width='600'></iframe>")
+        }
+
+        //Cerramos la ventana si está abierta
+        function cerrarVentana() {
+            if (newWindow) {
+                newWindow.close();
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        //Crear el título
+        document.write("<h1>TAREA DWEC03</h1><hr>");
+        //Guardo las variables
+        let nombre;
+        let dia;
+        let mes;
+        let ano;
+        let fechaActual = new Date();
+
+        do {
+            nombre = prompt("Introducir NOMBRE y APELLIDOS");
+        } while (nombre === "");
+
+        do {
+            dia = parseInt(prompt("Introducir DIA de nacimiento"));
+        } while (dia <= 0 || dia > 31);
+
+        do {
+            mes = parseInt(prompt("Introducir MES de nacimiento"));
+        } while (mes <= 0 || mes > 12);
+
+        do {
+            ano = parseInt(prompt("Introducir AÑO de nacimiento"));
+        } while (ano <= 0 || ano > fechaActual.getFullYear());
+
+        //Creo un array con los meses
+        let meses = Array(12);
+        meses[0] = "enero";
+        meses[1] = "febrero;";
+        meses[2] = "marzo";
+        meses[3] = "abril";
+        meses[4] = "mayo";
+        meses[5] = "junio";
+        meses[6] = "julio";
+        meses[7] = "agosto";
+        meses[8] = "septiembre";
+        meses[9] = "octubre";
+        meses[10] = "noviembre";
+        meses[11] = "diciembre";
+
+        document.write(`Buenos días<b>${nombre}</b>`);
+        document.write("Tu nombre tiene <b>" + nombre.length + "</b> caracteres incluido los espacios.<br>");
+        document.write(`La primera letra A de tu nombre está en la posición <b>${nombre.indexOf("a")}</b>.<br>`);
+        document.write(`La última letra A de tu nombre está en la posición <b>${nombre.lastIndexOf("a")}.</b>.<br>`);
+        document.write(`Tu nombre menos las tres primeras letras es: <b>${nombre.substring(3)}</b>.<br>`);
+        document.write(`Tu nombre en mayúsculas es: <b>${nombre.toUpperCase()}</b>.<br>`);
+        document.write(`Tu edad es:<b> ${calcularEdad()} años</b>.<br>`);
+        document.write(`Naciste un feliz <b>${dia} de ${meses[mes - 1]} de ${ano}</b>.<br>`);
+        //La función del coseno pide radianes, por lo que pasamos los grados a radianes.
+        //Radianes = Grados * (MATH.PI / 180)
+        document.write(`El coseno de 180 es <b>${Math.cos(180 * (Math.PI / 180))}</b> grados.<br>`);
+        document.write(`El número mayor de (34,67,23,75,35,19) es<b> ${Math.max(34, 67, 23, 75, 35, 19)}</b>.<br>`)
+        //Para sacarl el random tenemos en cuenta que va del 0 al 0.999. Para hacer uno del 1 al 6 tenemos que multiplicar
+        //por el valor más alto que queremos (el 6 en este caso) y sumarle 1. Así si da 0.0001 * 6, el redondeo hacia
+        // abajo dará 0 + 1 ya tienes el mínimo de 1. Y si sale 0.99999 * el máximo que queremos  con el redondeo a la
+        // baja de floor dará un 5, al que le sumamos 1 y ya tenemos el número límite que queremos.
+        document.write(`Ejemplo de numero al azar<b> ${Math.floor(Math.random() * 6 + 1)}</b>.<br>`);
+
+        function calcularEdad() {
+            //Hacemos la resta entre la fecha actual y el año introducido
+            let edad = fechaActual.getFullYear() - ano;
+            //Saco el día actual y lo paso a entero
+            let diaActual = parseInt(fechaActual.getUTCDate());
+            //Hacemos la resta entre los meses y el mes introducido. Le sumo uno porque getMonth empieza en 0.
+            //si la resta de los meses es menor que cero, es que aún no ha cumplido años, por lo que restamos 1 a la edad
+            //Calculada simplemente restando el año.
+            if (fechaActual.getMonth() + 1 - mes <= 0) {
+                return edad - 1;
+                //Si pasamos el check de mes vamos a comprobar si hay que restarle a la edad en función de en qué día
+                // del mes estemos. si la resta del día actual menos el dia introducido es menor que cero entonces pese
+                // a estar en el año y en el mes de su cumpleaños aún no ha llegado el día.
+            } else if (diaActual - dia < 0) {
+                return edad - 1
+            } else return edad;
+        }
+
+    </script>
+
+</head>
+<body>
+<input name="Abrir Ventana" onclick="abrirVentana()" type="button" value="Abrir Ventana">
+<input name="Cerrar Ventana" onclick="cerrarVentana()" type="button" value="Cerrar Ventana">
+</body>
+</html>
